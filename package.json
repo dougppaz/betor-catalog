@@ -1,0 +1,42 @@
+{
+  "name": "betor-catalog",
+  "version": "1.0.0",
+  "description": "Agregador de agregadores ;)",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "standard . --fix"
+  },
+  "bin": {
+    "betor-catalog": "src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dougppaz/betor-catalog.git"
+  },
+  "keywords": [
+    "betor",
+    "torrent",
+    "p2p",
+    "brasil",
+    "brazil",
+    "movies",
+    "tv",
+    "filmes",
+    "series"
+  ],
+  "author": "Douglas Paz <eu@douglaspaz.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dougppaz/betor-catalog/issues"
+  },
+  "homepage": "https://github.com/dougppaz/betor-catalog#readme",
+  "dependencies": {
+    "commander": "^14.0.1",
+    "dotenv": "^17.2.2",
+    "p-queue": "^8.1.1"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "standard": "^17.1.2"
+  }
+}
