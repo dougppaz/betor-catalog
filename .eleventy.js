@@ -1,4 +1,5 @@
 const { simpleHash } = require('./src/utils')
+const slugify = require('slugify')
 
 module.exports = eleventyConfig => {
   eleventyConfig.addPassthroughCopy('src/static')
@@ -6,7 +7,8 @@ module.exports = eleventyConfig => {
   eleventyConfig.addFilter('itemUrl', item => {
     const idsValue = `${item.imdb_id}-${item.tmdb_id}`
     const idsHash = simpleHash(idsValue)
-    return `/${item.item_type}/${idsHash}/`
+    const slug = slugify(item.info?.title || item.info?.name || '', {lower: true, trim: true, strict: true})
+    return `/${item.item_type}/${idsHash}-${slug}/`
   })
 
   eleventyConfig.addFilter('itemTitle', item => (item.info?.title || item.info?.name))
