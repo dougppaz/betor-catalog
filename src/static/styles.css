@@ -1,0 +1,138 @@
+/*
+  colors: https://flatuicolors.com/palette/ca
+*/
+
+body {
+  font-family: sans-serif;
+  background-color: #c8d6e5;
+  color: #222f3e;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #01a3a4;
+}
+
+header {
+  background-color: #341f97;
+  color: #c8d6e5;
+  padding: 1rem;
+}
+
+header > .content {
+  max-width: 800px;
+  margin: auto;
+  padding: .5rem;
+}
+
+header > .content > h1 {
+  font-size: 1.5rem;
+  padding: 0;
+  margin: 0;
+}
+
+header > .content > h1 > a {
+  color: #c8d6e5;
+  text-decoration: none;
+}
+
+main {
+  max-width: 800px;
+  margin: auto;
+  padding: .5rem;
+}
+
+main > .pages {
+  text-align: center;
+  font-weight: lighter;
+}
+
+main > .items {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+  main > .items {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+main > .items > .item {
+  display: block;
+}
+
+main > .items > .item > a {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: #222f3e;
+}
+
+main > .items > .item > a > .poster {
+  display: block;
+  border-radius: .5rem;
+  overflow: hidden;
+}
+
+main > .items > .item > a > .poster > img {
+  display: block;
+  max-width: 100%;
+}
+
+main > .items > .item > a > .title {
+  font-size: 1.5rem;
+  padding: 0;
+  margin: .5rem 0;
+}
+
+main > .items > .item > a > .providers {
+  font-size: .75rem;
+  display: inline-block;
+  gap: .5rem;
+}
+
+main > .items > .item > a > .providers > .provider {
+  display: inline-block;
+  background-color: #ff6b6b;
+  border-radius: .25rem;
+  overflow: hidden;
+}
+
+main > .items > .item > a > .providers > .provider > .name {
+  display: inline-block;
+  background-color: #ee5253;
+  color: #feca57;
+  font-weight: bolder;
+  padding: .25rem .5rem;
+}
+
+main > .items > .item > a > .providers > .provider > .languages {
+  display: inline-flex;
+  gap: .5rem;
+  padding: .25rem .5rem;
+}
+
+main > .items > .item > a > .providers > .provider > .languages > .language {
+  display: inline-block;
+  text-transform: uppercase;
+  font-weight: lighter;
+  color: #222f3e;
+}
+
+nav {
+  display: flex;
+  margin: 5rem 0;
+  justify-content: space-between;
+}
+
+nav > a {
+  display: inline-block;
+}
+
+nav > a.next {
+  margin-left: auto;
+}

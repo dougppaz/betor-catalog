@@ -1,0 +1,25 @@
+---
+pagination:
+  data: items
+  size: 1
+  alias: item
+permalink: "{{ item | itemUrl }}/index.html"
+layout: base.njk
+---
+<article>
+  <div class="poster"><img src="https://image.tmdb.org/t/p/w200{{ item.info.poster_path }}" /></div>
+  <h2>{{ item | itemTitle }}</h2>
+  <p>
+    <span><strong>IMDb:</strong> {% if item.imdb_id %}{{ item.imdb_id }}{% else %}-{% endif %}</span>
+    <span>/</span>
+    <span><strong>TMDB:</strong> {% if item.tmdb_id %}{{ item.tmdb_id }}{% else %}-{% endif %}</span>
+  </p>
+  {% for provider_page in item.provider_pages %}
+    <hr />
+    <p>{{ provider_page.slug | providerName }}</p>
+    <p><a href="{{ provider_page.url }}" target="_blank">{{ provider_page.url }}</a></p>
+  {% endfor %}
+</article>
+<nav>
+  <p><a href="/">← Voltar ao catálogo</a></p>
+</nav>
