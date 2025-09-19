@@ -31,13 +31,14 @@
   },
   "homepage": "https://github.com/dougppaz/betor-catalog#readme",
   "dependencies": {
+    "@11ty/eleventy": "^3.1.2",
     "commander": "^14.0.1",
     "dotenv": "^17.2.2",
     "p-queue": "^8.1.1",
     "slugify": "^1.6.6"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.2",
-    "standard": "^17.1.2"
+    "standard": "^17.1.2",
+    "surge": "^0.24.6"
   }
 }
