@@ -5,7 +5,8 @@ pagination:
   alias: item
 permalink: "{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1 }}/{% endif %}index.html"
 layout: base.njk
-title: Catálogo Betor
+eleventyComputed:
+  title: "Catálogo Betor{% if pagination.pageNumber > 0 %} - Página {{ pagination.pageNumber + 1 }}{% endif %}"
 ---
 <p class="pages">Página <strong>{{ pagination.pageNumber + 1 }}</strong> de {{ pagination.pages.length }}</p>
 <div class="items">

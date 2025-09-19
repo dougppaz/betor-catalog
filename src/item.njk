@@ -5,9 +5,11 @@ pagination:
   alias: item
 permalink: "{{ item | itemUrl }}/index.html"
 layout: base.njk
+eleventyComputed:
+  title: "{{ item | itemTitle }} - Catálogo Betor"
 ---
 <article>
-  <div class="poster"><img src="https://image.tmdb.org/t/p/w200{{ item.info.poster_path }}" /></div>
+  <div class="poster"><img src="{{ item | itemPosterURL }}" /></div>
   <h2>{{ item | itemTitle }}</h2>
   <p>
     <span><strong>IMDb:</strong> {% if item.imdb_id %}{{ item.imdb_id }}{% else %}-{% endif %}</span>
