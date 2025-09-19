@@ -5,13 +5,14 @@ pagination:
   alias: item
 permalink: "{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1 }}/{% endif %}index.html"
 layout: base.njk
+title: Catálogo Betor
 ---
 <p class="pages">Página <strong>{{ pagination.pageNumber + 1 }}</strong> de {{ pagination.pages.length }}</p>
 <div class="items">
   {% for item in pagination.items %}
     <div class="item">
       <a href="{{ item | itemUrl }}">
-        <div class="poster"><img src="https://image.tmdb.org/t/p/w300{{ item.info.poster_path }}" /></div>
+        <div class="poster"><img src="{{ item | itemPosterURL }}" /></div>
         <p class="title">{{ item | itemTitle }}</p>
         <div class="providers">
           {% for p in item.provider_pages %}

@@ -20,6 +20,8 @@ module.exports = eleventyConfig => {
     return slug
   })
 
+  eleventyConfig.addFilter('itemPosterURL', item => (item.info?.poster_path ? `https://image.tmdb.org/t/p/w300${item.info?.poster_path}` : 'https://placehold.co/300x450?text=Betor'))
+
   return {
     dir: { input: 'src', output: 'dist' }
   }
