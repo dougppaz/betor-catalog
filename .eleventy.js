@@ -31,6 +31,11 @@ module.exports = eleventyConfig => {
     return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
   })
 
+  eleventyConfig.addFilter('toLocaleString', (value) => {
+    const date = new Date(value)
+    return date.toLocaleString()
+  })
+
   return {
     dir: { input: 'src', output: 'dist' }
   }
