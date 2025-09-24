@@ -16,7 +16,7 @@ eleventyComputed:
         <div class="poster"><img src="{{ item | itemPosterURL }}" /></div>
         <p class="title">{{ item | itemTitle }}</p>
         <div class="providers">
-          {% for p in item.provider_pages %}
+          {% for p in item.providers %}
             <div class="provider">
               <div class="name">{{ p.slug | providerName }}</div>
               {% if p.languages.length > 0 %}

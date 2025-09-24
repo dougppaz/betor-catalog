@@ -16,10 +16,19 @@ eleventyComputed:
     <span>/</span>
     <span><strong>TMDB:</strong> {% if item.tmdb_id %}{{ item.tmdb_id }}{% else %}-{% endif %}</span>
   </p>
-  {% for provider_page in item.provider_pages %}
+  <p><small><strong>Atualizado às:</strong> {{ item.last_updated }}</small></p>
+  {% for provider_item in item.providers %}
     <hr />
-    <p>{{ provider_page.slug | providerName }}</p>
-    <p><a href="{{ provider_page.url }}" target="_blank">{{ provider_page.url }}</a></p>
+    <h3><strong>{{ provider_item.slug | providerName }}</strong></h3>
+    <p><a href="{{ provider_item.url }}" target="_blank">{{ provider_item.url }}</a></p>
+    {% for torrent in provider_item.torrents %}
+      <p><strong>{{ torrent.torrent_name }}</strong>{% if torrent.torrent_size %} <span>({{ torrent.torrent_size | formatBytes }})</span>{% endif %}</p>
+      {% if torrent.torrent_files %}
+        <p>Arquivos:</p>
+        <pre>{% for file in torrent.torrent_files %}{{file}}
+{% endfor %}</pre>
+      {% endif %}
+    {% endfor %}
   {% endfor %}
 </article>
 <nav>

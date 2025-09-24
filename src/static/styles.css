@@ -97,14 +97,14 @@ main > .items > .item > a > .providers {
 
 main > .items > .item > a > .providers > .provider {
   display: inline-block;
-  background-color: #ff6b6b;
+  background-color: #576574;
   border-radius: .25rem;
   overflow: hidden;
 }
 
 main > .items > .item > a > .providers > .provider > .name {
   display: inline-block;
-  background-color: #ee5253;
+  background-color: #222f3e;
   color: #feca57;
   font-weight: bolder;
   padding: .25rem .5rem;
@@ -119,8 +119,8 @@ main > .items > .item > a > .providers > .provider > .languages {
 main > .items > .item > a > .providers > .provider > .languages > .language {
   display: inline-block;
   text-transform: uppercase;
-  font-weight: lighter;
-  color: #222f3e;
+  font-weight: bolder;
+  color: #c8d6e5;
 }
 
 nav {
