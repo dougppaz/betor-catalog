@@ -72,17 +72,6 @@ main > .items > .item > a {
   color: #222f3e;
 }
 
-main > .items > .item > a > .poster {
-  display: block;
-  border-radius: .5rem;
-  overflow: hidden;
-}
-
-main > .items > .item > a > .poster > img {
-  display: block;
-  max-width: 100%;
-}
-
 main > .items > .item > a > .title {
   font-size: 1.5rem;
   padding: 0;
@@ -135,4 +124,15 @@ nav > a {
 
 nav > a.next {
   margin-left: auto;
+}
+
+.poster {
+  display: inline-block;
+  border-radius: .5rem;
+  overflow: hidden;
+}
+
+.poster > img {
+  display: block;
+  max-width: 100%;
 }
