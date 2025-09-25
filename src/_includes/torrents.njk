@@ -1,0 +1,30 @@
+{% macro data(item, torrent) %}
+  data-item
+  data-item-type="{{ item.item_type }}"
+  data-item-imdb-id="{{ item.imdb_id }}"
+  data-item-tmdb-id="{{ item.tmdb_id }}"
+  data-item-last-updated="{{ item.last_updated }}"
+  data-torrent
+  data-torrent-name="{{ torrent.torrent_name }}"
+  data-torrent-magnet-uri="{{ torrent.magnet_uri }}"
+  data-torrent-languages="{{ torrent.languages | join(',') }}"
+  data-torrent-size="{{ torrent.torrent_size }}"
+  data-torrent-num-peers="{{ torrent.torrent_num_peers }}"
+  data-torrent-num-seeds="{{ torrent.torrent_num_seeds }}"
+  data-torrent-inserted-at="{{ torrent.inserted_at }}"
+{% endmacro %}
+
+{% macro t(item, torrent) %}
+  <div class="torrent" {{ data(item, torrent) }}>
+    <p>
+      <strong>🧲 {{ torrent.torrent_name }}</strong>
+      {% if torrent.languages.length > 0 %}<span>[{{ torrent.languages | join('/') | upper }}]</span>{% endif %}
+      {% if torrent.torrent_size %}<span>({{ torrent.torrent_size | formatBytes }})</span>{% endif %}
+    </p>
+    {% if torrent.torrent_files %}
+      <p><small><strong>Arquivos:</strong></small></p>
+      <pre>{% for file in torrent.torrent_files %}{{file}}
+{% endfor %}</pre>
+    {% endif %}
+  </div>
+{% endmacro %}
