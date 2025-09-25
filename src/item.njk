@@ -25,7 +25,7 @@ eleventyComputed:
       {% for torrent in provider_item.torrents %}
         <div class="torrent" data-torrent>
           <p><strong data-torrent-name="{{ torrent.torrent_name }}" data-torrent-magnet-uri="{{ torrent.magnet_uri }}">{{ torrent.torrent_name }}</strong>{% if torrent.torrent_size %} <span data-torrent-size="{{ torrent.torrent_size }}">({{ torrent.torrent_size | formatBytes }})</span>{% endif %}</p>
-          <p><strong>Idiomas:</strong> {% for l in torrent.languages %}<span data-language="{{ l }}" data-language-{{ l }}>{{ l }}</span> {% endfor %}</p>
+          {% if torrent.languages %}<p><strong>Idiomas:</strong> {% for l in torrent.languages %}<span data-language="{{ l }}" data-language-{{ l }}>{{ l }}</span> {% endfor %}</p>{% endif %}
           {% if torrent.torrent_files %}
             <p><strong>Arquivos:</strong></p>
             <pre>{% for file in torrent.torrent_files %}{{file}}
