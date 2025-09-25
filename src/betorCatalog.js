@@ -24,7 +24,9 @@ class BetorCatalog {
   async fetchCatalogItems (page = 1, items = []) {
     const url = `${this.options.betorApiUrl}/v1/catalog/?size=100&page=${page}`
     console.log(`fetching catalog page ${page}: ${url}`)
-    const res = await fetch(url)
+    const res = await fetch(url, {
+      headers: this.options.betorApiAuthorization ? { Authorization: `Basic ${this.options.betorApiAuthorization}` } : {}
+    })
     if (!res.ok) {
       throw new Error(`Error to fetch page ${page}: ${res.status}`)
     }

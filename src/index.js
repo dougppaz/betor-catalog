@@ -6,6 +6,7 @@ const BetorCatalog = require('./betorCatalog')
 
 program
   .option('-b, --betor-api-url <string>', 'Betor API Base URL', 'http://localhost:8000')
+  .option('-a, --betor-api-authorization <string>', 'Betor API Basic Authorization Header value')
   .argument('<action>', 'build-items|serve|build')
   .action(async (action, options) => {
     console.log('action:', action)
