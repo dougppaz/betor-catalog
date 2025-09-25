@@ -8,6 +8,8 @@ layout: base.njk
 eleventyComputed:
   title: "Catálogo Betor{% if pagination.pageNumber > 0 %} - Página {{ pagination.pageNumber + 1 }}{% endif %}"
 ---
+{% import "providers.njk" as providers %}
+{% import "torrents.njk" as torrents %}
 <p class="pages">Página <strong>{{ pagination.pageNumber + 1 }}</strong> de {{ pagination.pages.length }}</p>
 <div class="items">
   {% for item in pagination.items %}
@@ -16,19 +18,15 @@ eleventyComputed:
         <div class="poster"><img src="{{ item | itemPosterURL }}" /></div>
         <p class="title">{{ item | itemTitle }}</p>
         <div class="providers">
-          {% for p in item.providers %}
-            <div class="provider">
-              <div class="name">{{ p.slug | providerName }}</div>
-              {% if p.languages.length > 0 %}
-                <div class="languages">
-                  {% for l in p.languages %}
-                    <span class="language">{{ l }}</span>
-                  {% endfor %}
-                </div>
-              {% endif %}
-            </div>
+          {% for provider in item.providers %}
+            {{ providers.tag(provider) }}
           {% endfor %}
         </div>
+        {% for provider in item.providers %}
+          {% for torrent in provider.torrents %}
+            <span class="hidden" {{ torrents.data(item, torrent) }} />
+          {% endfor %}
+        {% endfor %}
       </a>
     </div>
   {% endfor %}

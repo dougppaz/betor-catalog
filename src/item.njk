@@ -8,30 +8,23 @@ layout: base.njk
 eleventyComputed:
   title: "{{ item | itemTitle }} - Catálogo Betor"
 ---
+{% import "torrents.njk" as torrents %}
+{% import "providers.njk" as providers %}
 <article>
   <div class="poster"><img src="{{ item | itemPosterURL }}" /></div>
   <h2>{{ item | itemTitle }}</h2>
   <p>
-    <span><strong>IMDb:</strong> {% if item.imdb_id %}<span data-imdb-id="{{ item.imdb_id }}">{{ item.imdb_id }}</span>{% else %}-{% endif %}</span>
+    <span><strong>IMDb:</strong> {% if item.imdb_id %}<span>{{ item.imdb_id | upper }}</span>{% else %}-{% endif %}</span>
     <span>/</span>
-    <span><strong>TMDB:</strong> {% if item.tmdb_id %}<span data-tmdb-id="{{ item.tmdb_id }}">{{ item.tmdb_id }}</span>{% else %}-{% endif %}</span>
+    <span><strong>TMDB:</strong> {% if item.tmdb_id %}<span>{{ item.tmdb_id }}</span>{% else %}-{% endif %}</span>
   </p>
-  <p><small><strong>Atualizado às:</strong> <span data-last-updated="{{ item.last_updated }}">{{ item.last_updated | toLocaleString }}</span></small></p>
-  {% for provider_item in item.providers %}
+  <p><small><strong>Atualizado às:</strong> <span>{{ item.last_updated | toLocaleString }}</span></small></p>
+  {% for provider in item.providers %}
     <hr />
     <div class="provider">
-      <h3><strong>{{ provider_item.slug | providerName }}</strong></h3>
-      <p><a href="{{ provider_item.url }}" target="_blank">{{ provider_item.url }}</a></p>
-      {% for torrent in provider_item.torrents %}
-        <div class="torrent" data-torrent>
-          <p><strong data-torrent-name="{{ torrent.torrent_name }}" data-torrent-magnet-uri="{{ torrent.magnet_uri }}">{{ torrent.torrent_name }}</strong>{% if torrent.torrent_size %} <span data-torrent-size="{{ torrent.torrent_size }}">({{ torrent.torrent_size | formatBytes }})</span>{% endif %}</p>
-          {% if torrent.languages.length > 0 %}<p><strong>Idiomas:</strong> {% for l in torrent.languages %}<span data-language="{{ l }}" data-language-{{ l }}>{{ l }}</span> {% endfor %}</p>{% endif %}
-          {% if torrent.torrent_files %}
-            <p><strong>Arquivos:</strong></p>
-            <pre>{% for file in torrent.torrent_files %}{{file}}
-{% endfor %}</pre>
-          {% endif %}
-        </div>
+      <a href="{{ provider.url }}" target="_blank">{{ providers.tag(provider) }}</a>
+      {% for torrent in provider.torrents %}
+        {{ torrents.t(item, torrent) }}
       {% endfor %}
     </div>
   {% endfor %}
