@@ -16,4 +16,6 @@ jobs:
         node-version: 22
     - run: npm ci
     - run: npm link
-    - run: betor-catalog --help
+    - env:
+        TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+      run: betor-catalog -b ${{ vars.BETOR_API_URL }} -a ${{ secrets.BETOR_API_AUTHORIZATION }} build-items
