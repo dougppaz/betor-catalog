@@ -1,0 +1,50 @@
+---
+id: betor
+name: Catálogo Betor
+description: Agregador de agregadores ;)
+language: pt-BR
+type: public
+encoding: UTF-8
+links:
+- https://catalogo-betor.dgls.me/
+
+caps:
+  categories:
+    Movies: Movies
+    TV: TV
+  modes:
+    search: [q]
+    tv-search: [imdbid, tmdbid]
+    movie-search: [imdbid, tmdbid]
+
+search:
+  paths:
+    - path: /
+  rows:
+    selector: "[data-torrent]"
+  fields:
+    category:
+      attribute: data-item-type
+      case:
+        tv: TV
+        movie: Movies
+    title:
+      attribute: data-torrent-name
+    details:
+      attribute: data-provider-url
+    magnet:
+      attribute: data-torrent-magnet-uri
+    imdbid:
+      attribute: data-item-imdb-id
+    tmdbid:
+      attribute: data-item-tmdb-id
+    date:
+      attribute: data-torrent-inserted-at
+    size:
+      attribute: data-torrent-size
+    seeders:
+      attribute: data-torrent-num-seeds
+    leechers:
+      attribute: data-torrent-num-peers
+
+# json engine n/a

@@ -24,7 +24,7 @@ eleventyComputed:
     <div class="provider">
       <a href="{{ provider.url }}" target="_blank">{{ providers.tag(provider) }}</a>
       {% for torrent in provider.torrents %}
-        {{ torrents.t(item, torrent) }}
+        {{ torrents.t(item, provider, torrent) }}
       {% endfor %}
     </div>
   {% endfor %}

@@ -24,7 +24,7 @@ eleventyComputed:
         </div>
         {% for provider in item.providers %}
           {% for torrent in provider.torrents %}
-            <span class="hidden" {{ torrents.data(item, torrent) }} />
+            <span class="hidden" {{ torrents.data(item, provider, torrent) }} />
           {% endfor %}
         {% endfor %}
       </a>
