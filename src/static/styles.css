@@ -146,3 +146,27 @@ pre {
 .hidden {
   display: none;
 }
+
+.prowlarr-bar {
+  margin: 0;
+  padding: 1rem;
+  background-color: #FD7272;
+  color: white;
+}
+
+.prowlarr-bar a {
+  color: #F8EFBA;
+}
+
+.prowlarr-bar > p {
+  font-size: 1.25rem;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+footer {
+  max-width: 800px;
+  margin: 5rem auto;
+  font-size: .75rem;
+}
