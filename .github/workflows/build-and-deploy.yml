@@ -8,6 +8,9 @@ on:
   - cron: '0 * * * *'
   workflow_dispatch: {}
 
+env:
+  TZ: America/Sao_Paulo
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
