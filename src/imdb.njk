@@ -1,0 +1,13 @@
+---
+pagination:
+  data: itemsByImdbId
+  size: 1
+  alias: group
+permalink: "imdb/{{ group.key }}/index.html"
+layout: base.njk
+eleventyComputed:
+  title: "IMDB #{{ group.key }}{% if pagination.pageNumber > 0 %} - Página {{ pagination.pageNumber + 1 }}{% endif %} - Catálogo Betor"
+---
+{% import "list.njk" as list %}
+<p class="pages"><strong>{{ group.items.length }}</strong> items encontrados</p>
+{{ list.l(group.items) }}

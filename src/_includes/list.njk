@@ -1,0 +1,25 @@
+{% import "providers.njk" as providers %}
+{% import "torrents.njk" as torrents %}
+
+{% macro l(items) %}
+  <div class="items">
+    {% for item in items %}
+      <div class="item">
+        <a href="{{ item | itemUrl }}">
+          <div class="poster"><img src="{{ item | itemPosterURL }}" /></div>
+          <p class="title">{{ item | itemTitle }}</p>
+          <div class="providers">
+            {% for provider in item.providers %}
+              {{ providers.tag(provider) }}
+            {% endfor %}
+          </div>
+          {% for provider in item.providers %}
+            {% for torrent in provider.torrents %}
+              <span class="hidden" {{ torrents.data(item, provider, torrent) }} />
+            {% endfor %}
+          {% endfor %}
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+{% endmacro %}

@@ -3,6 +3,8 @@ const { Eleventy } = require('@11ty/eleventy')
 const PQueue = require('p-queue').default
 
 const ITEMS_PATH = 'src/_data/items.json'
+const ITEMS_GROUP_BY_IMDB_ID_PATH = 'src/_data/itemsByImdbId.json'
+const ITEMS_GROUP_BY_TMDB_ID_PATH = 'src/_data/itemsByTmdbId.json'
 
 class BetorCatalog {
   constructor (options) {
@@ -18,7 +20,11 @@ class BetorCatalog {
     const items = await this.fetchCatalogItems()
     console.log(`${items.length} catalog items found`)
     const enrichedItems = await this.enrichItems(items)
-    this.writeItems(enrichedItems)
+    this.write(ITEMS_PATH, enrichedItems)
+    const itemsByImdb = await this.groupBy(enrichedItems, 'imdb_id')
+    this.write(ITEMS_GROUP_BY_IMDB_ID_PATH, itemsByImdb)
+    const itemsByTmdb = await this.groupBy(enrichedItems, 'tmdb_id')
+    this.write(ITEMS_GROUP_BY_TMDB_ID_PATH, itemsByTmdb)
   }
 
   async fetchCatalogItems (page = 1, items = []) {
@@ -104,8 +110,19 @@ class BetorCatalog {
     }
   }
 
-  writeItems (items) {
-    fs.writeFileSync(ITEMS_PATH, JSON.stringify(items, null, 2))
+  groupBy (items, attr) {
+    const groups = {}
+    items.forEach(item => {
+      if (!Object.keys(groups).includes(item[attr])) {
+        groups[item[attr]] = []
+      }
+      groups[item[attr]].push(item)
+    })
+    return Object.keys(groups).map(k => ({ key: k, items: groups[k] }))
+  }
+
+  write (path, items) {
+    fs.writeFileSync(path, JSON.stringify(items, null, 2))
   }
 
   async serve () {
