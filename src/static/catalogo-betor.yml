@@ -10,26 +10,34 @@ links:
 
 caps:
   categories:
-    Movies: Movies
-    TV: TV
+    movie: Movies
+    tv: TV
   modes:
     search: [q]
-    tv-search: [imdbid, tmdbid]
-    movie-search: [imdbid, tmdbid]
+    tv-search: [imdbid]
+    movie-search: [imdbid]
 
 search:
   paths:
-    - path: "{{ if or (.Query.IMDBID) (.Query.TMDBID) }}{{ else }}/{{ end }}{{ if .Query.IMDBID }}/imdb/{{ .Query.IMDBID }}/{{ else }}{{ end }}{{ if .Query.TMDBID }}/tmdb/{{ .Query.TMDBID }}/{{ else }}{{ end }}"
+    - path: "{{ if .Query.IMDBID }}/imdb/{{ .Query.IMDBID }}/{{ else }}/{{ end }}"
   rows:
     selector: "[data-torrent]"
   fields:
+    _torrent_name:
+      attribute: data-torrent-name
+    _languages_tags:
+      attribute: data-torrent-languages
+      filters:
+        - name: replace
+          args: ["en", "english"]
+        - name: replace
+          args: ["pt", "portuguese"]
+        - name: replace
+          args: ["pt-br", "brazilian"]
     category:
       attribute: data-item-type
-      case:
-        tv: TV
-        movie: Movies
     title:
-      attribute: data-torrent-name
+      text: "{{ .Result._torrent_name }}{{ if .Result._languages_tags }} [{{ .Result._languages_tags }}]{{ else }}{{ end }}"
     details:
       attribute: data-provider-url
     magnet:
