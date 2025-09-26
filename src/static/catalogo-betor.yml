@@ -19,7 +19,7 @@ caps:
 
 search:
   paths:
-    - path: /
+    - path: "{{ if or (.Query.IMDBID) (.Query.TMDBID) }}{{ else }}/{{ end }}{{ if .Query.IMDBID }}/imdb/{{ .Query.IMDBID }}/{{ else }}{{ end }}{{ if .Query.TMDBID }}/tmdb/{{ .Query.TMDBID }}/{{ else }}{{ end }}"
   rows:
     selector: "[data-torrent]"
   fields:
