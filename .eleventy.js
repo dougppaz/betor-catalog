@@ -31,7 +31,7 @@ module.exports = eleventyConfig => {
 
   eleventyConfig.addFilter('toLocaleString', (value) => {
     const date = new Date(value)
-    return date.toLocaleString()
+    return date.toLocaleString('pt-br')
   })
 
   return {
