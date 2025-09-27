@@ -19,7 +19,8 @@ class BetorCatalog {
     console.log('building items data...')
     const items = await this.fetchCatalogItems()
     console.log(`${items.length} catalog items found`)
-    const enrichedItems = await this.enrichItems(items)
+    const uniqueItems = this.removeDuplicateItems(items)
+    const enrichedItems = await this.enrichItems(uniqueItems)
     this.write(ITEMS_PATH, enrichedItems)
     const itemsByImdb = await this.groupBy(enrichedItems, 'imdb_id')
     this.write(ITEMS_GROUP_BY_IMDB_ID_PATH, itemsByImdb)
@@ -108,6 +109,18 @@ class BetorCatalog {
       info: itemInfo,
       ...item
     }
+  }
+
+  removeDuplicateItems (items) {
+    const ks = []
+    return items.filter(item => {
+      const k = `${item.imdb_id}-${item.tmdb_id}-${item.item_type}`
+      if (ks.includes(k)) {
+        return false
+      }
+      ks.push(k)
+      return true
+    })
   }
 
   groupBy (items, attr) {
