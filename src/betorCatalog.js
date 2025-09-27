@@ -12,7 +12,7 @@ class BetorCatalog {
     this.env = {
       tmdbApiKey: process.env.TMDB_API_KEY
     }
-    this.tmdbApiQueue = new PQueue({ intervalCap: 2, interval: 1000 })
+    this.enrichQueue = new PQueue({ intervalCap: 2, interval: 1000 })
   }
 
   async buildItems () {
@@ -49,7 +49,12 @@ class BetorCatalog {
   }
 
   async enrichItems (items) {
-    return Promise.all(items.map(item => this.enrichItem(item)))
+    let i = 0
+    return Promise.all(items.map(item => this.enrichQueue.add(() => {
+      i++
+      console.log(`[${i}/${items.length}]`)
+      return this.enrichItem(item)
+    })))
   }
 
   async enrichItem (item) {
@@ -72,7 +77,7 @@ class BetorCatalog {
       }
     }
     console.log(`fetching from tmdb imdb_id:${item.imdb_id} data: ${url}`)
-    const res = await this.tmdbApiQueue.add(() => fetch(url, options))
+    const res = await fetch(url, options)
     if (!res.ok) {
       throw new Error(`Error to fetch ${url}: ${res.status}`)
     }
