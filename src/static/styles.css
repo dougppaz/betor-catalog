@@ -168,5 +168,6 @@ pre {
 footer {
   max-width: 800px;
   margin: 5rem auto;
+  padding: .5rem;
   font-size: .75rem;
 }
