@@ -31,7 +31,7 @@ search:
         - name: replace
           args: ["en", "english"]
         - name: replace
-          args: ["pt-br", "brazilian"]
+          args: ["pt-BR", "brazilian"]
         - name: replace
           args: ["pt", "portuguese"]
     category:
