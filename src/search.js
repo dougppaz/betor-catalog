@@ -4,10 +4,10 @@ import items from './_data/items.json'
 
 const fuse = new Fuse(items, {
   keys: [
-    { name: 'info.title', weight: 0.6 },
-    { name: 'info.original_title', weight: 0.3 },
-    { name: 'info.overview', weight: 0.1 }
-  ]
+    'info.title',
+    'info.original_title'
+  ],
+  threshold: 0.2
 })
 
 const torrentTags = item => (item.providers.map(provider => provider.torrents.map(torrent => `<span
@@ -35,7 +35,7 @@ const fetch = async (request, env, ctx) => {
     return new Response(null, { status: 404 })
   }
   const results = fuse.search(q)
-  const items = results.map(({ item }) => (`<div class="item">
+  const items = results.map(({ item, ...data }) => (`<div class="item">
     <a href="${itemUrl(item)}">
       <div class="poster"><img src="${itemPosterURL(item)}" /></div>
       <p class="title">${itemTitle(item)}</p>
@@ -66,8 +66,14 @@ const fetch = async (request, env, ctx) => {
     </div>
   </header>
   <main>
-    ${items}
+    <div class="items">
+      ${items}
+    </div>
   </main>
+  <footer>
+    <p>Projeto em desenvolvimento... ajude mandando um <strong>feedback</strong> ou um <a href="https://github.com/dougppaz/betor-catalog" target="_blank">PR</a>.</p>
+    <p><strong>Contato/Dúvidas:</strong> douglas@dgls.me</p>
+  </footer>
 </body>
 </html>`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } })
 }
