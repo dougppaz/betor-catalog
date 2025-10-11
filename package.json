@@ -7,7 +7,7 @@
     "lint": "standard . --fix"
   },
   "bin": {
-    "betor-catalog": "src/index.js"
+    "betor-catalog": "src/cli.js"
   },
   "repository": {
     "type": "git",
