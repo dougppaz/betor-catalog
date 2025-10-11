@@ -1,0 +1,9 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "betor-search-worker",
+  "main": "src/search.js",
+  "compatibility_date": "2025-10-03",
+  "observability": {
+    "enabled": true
+  }
+}

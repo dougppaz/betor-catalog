@@ -4,7 +4,10 @@
   "description": "Agregador de agregadores ;)",
   "main": "src/index.js",
   "scripts": {
-    "lint": "standard . --fix"
+    "lint": "standard . --fix",
+    "search-deploy": "wrangler deploy",
+		"search-dev": "wrangler dev",
+		"search-start": "wrangler dev"
   },
   "bin": {
     "betor-catalog": "src/cli.js"
@@ -39,6 +42,7 @@
   },
   "devDependencies": {
     "standard": "^17.1.2",
-    "surge": "^0.24.6"
+    "surge": "^0.24.6",
+    "wrangler": "^4.42.1"
   }
 }
