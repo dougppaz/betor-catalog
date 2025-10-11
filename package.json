@@ -6,8 +6,8 @@
   "scripts": {
     "lint": "standard . --fix",
     "search-deploy": "wrangler deploy",
-		"search-dev": "wrangler dev",
-		"search-start": "wrangler dev"
+    "search-dev": "wrangler dev",
+    "search-start": "wrangler dev"
   },
   "bin": {
     "betor-catalog": "src/cli.js"
@@ -37,6 +37,7 @@
     "@11ty/eleventy": "^3.1.2",
     "commander": "^14.0.1",
     "dotenv": "^17.2.2",
+    "fuse.js": "^7.1.0",
     "p-queue": "^8.1.1",
     "slugify": "^1.6.6"
   },
