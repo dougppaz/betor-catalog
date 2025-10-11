@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
-require('dotenv').config()
-const { program } = require('commander')
-const BetorCatalog = require('./betorCatalog')
+import dotenv from 'dotenv'
+import { program } from 'commander'
+import BetorCatalog from './betorCatalog.js'
+
+dotenv.config()
 
 program
   .option('-b, --betor-api-url <string>', 'Betor API Base URL', 'http://localhost:8000')

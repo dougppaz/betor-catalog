@@ -1,6 +1,6 @@
-const fs = require('fs')
-const { Eleventy } = require('@11ty/eleventy')
-const PQueue = require('p-queue').default
+import fs from 'fs'
+import { Eleventy } from '@11ty/eleventy'
+import PQueue from 'p-queue'
 
 const ITEMS_PATH = 'src/_data/items.json'
 const ITEMS_GROUP_BY_IMDB_ID_PATH = 'src/_data/itemsByImdbId.json'
@@ -157,4 +157,4 @@ class BetorCatalog {
   }
 }
 
-module.exports = BetorCatalog
+export default BetorCatalog
