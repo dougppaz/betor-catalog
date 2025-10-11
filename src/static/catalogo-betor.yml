@@ -14,8 +14,8 @@ caps:
     tv: TV
   modes:
     search: [q]
-    tv-search: [imdbid]
-    movie-search: [imdbid]
+    tv-search: [q, imdbid]
+    movie-search: [q, imdbid]
 
 search:
   paths:
