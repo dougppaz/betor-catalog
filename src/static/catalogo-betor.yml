@@ -19,13 +19,11 @@ caps:
 
 search:
   paths:
-    - path: "{{ if .Query.Keywords }}/search/{{ else }}/{{ end }}{{ if .Query.IMDBID }}empty/{{ else }}{{ end }}"
+    - path: /
+    - path: "{{ if .Query.IMDBID }}/imdb/{{ .Query.IMDBID }}/{{ else }}/empty/{{ end }}"
+    - path: "{{ if .Query.Keywords }}/search/{{ else }}/empty/{{ end }}"
       inputs:
         q: "{{ .Keywords }}"
-    - path: "{{ if .Query.IMDBID }}/imdb/{{ .Query.IMDBID }}/{{ else }}/empty/{{ end }}"
-      categories:
-        - movie
-        - tv
   rows:
     selector: "[data-torrent]"
   fields:
