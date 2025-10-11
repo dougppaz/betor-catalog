@@ -19,7 +19,7 @@ caps:
 
 search:
   paths:
-    - path: "{{ if .Query.Keywords }}/search/{{ else }}{{ end }}"
+    - path: "{{ if .Query.Keywords }}/search/{{ else }}/{{ end }}{{ if .Query.IMDBID }}empty/{{ else }}{{ end }}"
       inputs:
         q: "{{ .Keywords }}"
     - path: "{{ if .Query.IMDBID }}/imdb/{{ .Query.IMDBID }}/{{ else }}/empty/{{ end }}"
