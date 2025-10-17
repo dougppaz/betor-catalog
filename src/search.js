@@ -71,8 +71,8 @@ const fetch = async (request, env, ctx) => {
     </div>
   </main>
   <footer>
-    <p>Projeto em desenvolvimento... ajude mandando um <strong>feedback</strong> ou um <a href="https://github.com/dougppaz/betor-catalog" target="_blank">PR</a>.</p>
     <p><strong>Contato/Dúvidas:</strong> douglas@dgls.me</p>
+    <p><a href="https://github.com/dougppaz/betor-catalog" target="_blank">Github</a></p>
   </footer>
 </body>
 </html>`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } })
