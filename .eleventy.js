@@ -11,6 +11,7 @@ module.exports = eleventyConfig => {
     if (slug === "comando-torrents") return "Comando"
     if (slug === "bludv") return "BLUDV"
     if (slug === "torrent-dos-filmes") return "Torrent dos Filmes"
+    if (slug === "starck-filmes") return "Starck Filmes"
     return slug
   })
 
