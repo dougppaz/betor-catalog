@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Agregador de agregadores ;)",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "lint": "standard . --fix",
     "search-deploy": "wrangler deploy",

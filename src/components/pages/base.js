@@ -1,9 +1,9 @@
-<!doctype html>
+export default (content, { title } = {}) => (`<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ title | safe }}</title>
+  <title>${title || 'Catálogo Betor'}</title>
   <link rel="stylesheet" href="/static/styles.css">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DB54CJJ7SK"></script>
@@ -11,7 +11,6 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-DB54CJJ7SK');
   </script>
 </head>
@@ -24,10 +23,10 @@
   <div class="prowlarr-bar">
     <p>Utilize com o Prowlarr, baixe o nosso <a href="/static/catalogo-betor.yml" target="_black">Prowlarr Cardigann YML Definition</a></p>
   </div>
-  <main>{{ content | safe }}</main>
+  <main>${content}</main>
   <footer>
     <p><strong>Contato/Dúvidas:</strong> douglas@dgls.me</p>
     <p><a href="https://github.com/dougppaz/betor-catalog" target="_blank">Github</a></p>
   </footer>
 </body>
-</html>
+</html>`)
