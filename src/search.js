@@ -20,7 +20,7 @@ const fetch = async (request, env, ctx) => {
     return new Response(null, { status: 404 })
   }
   const results = fuse.search(q)
-  const itemsHTML = renderItems(results)
+  const itemsHTML = renderItems(results.map(({ item }) => item))
   console.log(results)
   return new Response(
     renderBase(itemsHTML, { title: `Resultados da busca "${q}" - Catálogo Betor` }),
