@@ -45,5 +45,10 @@
     "standard": "^17.1.2",
     "surge": "^0.24.6",
     "wrangler": "^4.42.1"
+  },
+  "standard": {
+    "ignore": [
+      "!.eleventy.js"
+    ]
   }
 }
