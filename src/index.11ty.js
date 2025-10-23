@@ -5,7 +5,7 @@ export default class Index {
     return {
       pagination: {
         data: 'items',
-        size: 2,
+        size: 20,
         alias: 'item'
       },
       permalink: ({ pagination }) => {

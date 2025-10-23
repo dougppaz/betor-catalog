@@ -6,7 +6,7 @@ export const itemUrl = item => {
   return `/${item.item_type}/${idsValue}-${slug}/`
 }
 
-export const itemPosterURL = item => (item.info?.poster_path ? `https://image.tmdb.org/t/p/w300${item.info?.poster_path}` : 'https://placehold.co/300x450?text=Betor')
+export const itemPosterURL = item => (item.info?.poster_path ? `https://image.tmdb.org/t/p/w200${item.info?.poster_path}` : 'https://placehold.co/200x300?text=Betor')
 
 export const itemTitle = item => (item.info?.title || item.info?.name)
 
@@ -30,4 +30,14 @@ export const formatBytes = (bytes, decimals = 2) => {
 export const toLocaleString = value => {
   const date = new Date(value)
   return date.toLocaleString('pt-br', { timeZone: 'America/Sao_Paulo' })
+}
+
+export const itemImdbUrl = ({ imdb_id: imdbId }) => {
+  return `https://www.imdb.com/pt/title/${imdbId}/`
+}
+
+export const itemTmdbUrl = ({ item_type: itemType, tmdb_id: tmdbId }) => {
+  if (itemType === 'movie') return `https://www.themoviedb.org/movie/${tmdbId}`
+  if (itemType === 'tv') return `https://www.themoviedb.org/tv/${tmdbId}`
+  throw new Error(`Invalid item type: ${itemType}`)
 }
