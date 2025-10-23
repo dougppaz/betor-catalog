@@ -9,8 +9,8 @@ const itemTypeTag = ({ item_type: itemType }) => {
 
 export default item => {
   const typeTag = itemTypeTag(item)
-  const imdbTag = item.imdb_id && `<a href="${itemImdbUrl(item)}" target="_blank">IMDb</a>`
-  const tmdbTag = item.tmdb_id && `<a href="${itemTmdbUrl(item)}" target="_blank">TMDB</a>`
+  const imdbTag = item.imdb_id ? `<a href="${itemImdbUrl(item)}" target="_blank">IMDb</a>` : ''
+  const tmdbTag = item.tmdb_id ? `<a href="${itemTmdbUrl(item)}" target="_blank">TMDB</a>` : ''
   return `
     <div class="item">
       ${typeTag}
