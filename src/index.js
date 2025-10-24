@@ -3,6 +3,8 @@ import { Eleventy } from '@11ty/eleventy'
 import PQueue from 'p-queue'
 
 const ITEMS_PATH = 'src/_data/items.json'
+const MOVIES_PATH = 'src/_data/movies.json'
+const TVS_PATH = 'src/_data/tvs.json'
 const ITEMS_GROUP_BY_IMDB_ID_PATH = 'src/_data/itemsByImdbId.json'
 const ITEMS_GROUP_BY_IMDB_ID_AND_SEASON_PATH = 'src/_data/itemsByImdbIdAndSeason.json'
 const ITEMS_GROUP_BY_TMDB_ID_PATH = 'src/_data/itemsByTmdbId.json'
@@ -23,6 +25,8 @@ class BetorCatalog {
     const uniqueItems = this.removeDuplicateItems(items)
     const enrichedItems = await this.enrichItems(uniqueItems)
     this.write(ITEMS_PATH, enrichedItems)
+    this.write(MOVIES_PATH, enrichedItems.filter(({ item_type: itemType }) => (itemType === 'movie')))
+    this.write(TVS_PATH, enrichedItems.filter(({ item_type: itemType }) => (itemType === 'tv')))
     const itemsByImdb = await this.groupBy(enrichedItems, 'imdb_id')
     this.write(ITEMS_GROUP_BY_IMDB_ID_PATH, itemsByImdb)
     const itemsByImdbAndSeason = await this.groupBySeason(enrichedItems, 'imdb_id')
