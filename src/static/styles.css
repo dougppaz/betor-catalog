@@ -121,6 +121,8 @@ nav > a.next {
 .item {
   position: relative;
   display: flex;
+  align-items: flex-start;
+  max-width: 100%;
   margin: 1rem 0;
   padding: .5rem;
   background-color: white;
@@ -128,6 +130,12 @@ nav > a.next {
   box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, .5);
   border-radius: .125rem;
   overflow: hidden;
+}
+
+@media only screen and (max-width: 850px) {
+  .item {
+    display: block;
+  }
 }
 
 .item > .item-type {
@@ -156,14 +164,19 @@ nav > a.next {
   display: block;
   border-radius: .5rem;
   overflow: hidden;
+  width: 120px;
+  flex-shrink: 0;
 }
 
 .item > .poster > img {
   display: block;
+  width: 100%;
 }
 
 .item > .details {
-  flex-grow: 1;
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
 }
 
 .item > .details > * {
@@ -182,12 +195,12 @@ nav > a.next {
 .item > .details > .provider {
   border-radius: .25rem;
   overflow: hidden;
+  background-color: #F8EFBA;
 }
 
 .item > .details > .provider > .header {
   display: flex;
   justify-content: space-between;
-  background-color: #F8EFBA;
   padding: .5rem;
   border-radius: .25rem;
   border: solid #F97F51 1px;
@@ -201,4 +214,30 @@ nav > a.next {
   text-transform: uppercase;
   font-size: .5rem;
   vertical-align: middle;
+}
+
+.item > .details > .provider > .torrents {
+  padding: .25rem;
+}
+
+.item > .details > .provider > .torrents > .torrent {
+  display: flex;
+  gap: .25rem;
+  font-weight: lighter;
+  padding: .25rem;
+}
+
+.item > .details > .provider > .torrents > .torrent > .name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.item > .details > .provider > .torrents > .torrent > .size {
+  white-space: nowrap;
+}
+
+.item > .details > .provider > .torrents > .torrent:nth-child(2n) {
+  background-color: rgba(255, 255, 255, .5);
 }
