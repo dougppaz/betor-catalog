@@ -17,7 +17,11 @@ export default (content, { title, q } = {}) => (`<!doctype html>
 <body>
   <header>
     <div class="content">
-      <h1><a href="/">🎬 Catálogo Betor</a></h1>
+      <h1><a href="/">🎬 <span>Catálogo Betor</span></a></h1>
+      <div class="item-types">
+        <a href="/filmes/">Filmes</a>
+        <a href="/series/">Séries</a>
+      </div>
     </div>
   </header>
   <div class="prowlarr-bar">
