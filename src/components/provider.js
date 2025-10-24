@@ -11,7 +11,6 @@ export default (item, provider) => {
         <div class="name">${providerName(provider.slug)} ${languagesTag}</div>
         <div class="actions">
           <a href="${provider.url}" target="_blank" class="url">🔗</a>
-          <span class="collapse">➕</span>
         </div>
       </div>
       <div class="torrents">
