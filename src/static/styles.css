@@ -228,6 +228,7 @@ nav > a.next {
   overflow: hidden;
   width: 120px;
   flex-shrink: 0;
+  margin-bottom: 1rem;
 }
 
 .item > .poster > img {
