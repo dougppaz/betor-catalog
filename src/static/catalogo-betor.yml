@@ -14,14 +14,14 @@ caps:
     tv: TV
   modes:
     search: [q]
-    tv-search: [q, imdbid]
+    tv-search: [q, imdbid, season]
     movie-search: [q, imdbid]
 
 search:
   paths:
-    - path: "{{ if .Query.Keywords }}/search/{{ else }}/{{ end }}{{ if .Query.IMDBID }}imdb/{{ .Query.IMDBID }}/{{ else }}{{ end }}"
+    - path: "{{ if .Query.Q }}/search/{{ else }}/{{ end }}{{ if .Query.IMDBID }}imdb/{{ .Query.IMDBID }}/{{ else }}{{ end }}{{ if and (.Query.IMDBID) (.Query.Season) }}season/{{ .Query.Season }}/{{ else }}{{ end }}"
       inputs:
-        q: "{{ .Keywords }}"
+        q: "{{ .Query.Q }}"
   rows:
     selector: "[data-torrent]"
   fields:
