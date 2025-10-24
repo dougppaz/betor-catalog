@@ -2,6 +2,10 @@
   colors: https://flatuicolors.com/palette/in
 */
 
+/*
+  basics
+*/
+
 body {
   font-family: sans-serif;
   background-color: #f1f2f6;
@@ -14,6 +18,17 @@ a {
   text-decoration: none;
   color: #1B9CFC;
 }
+
+pre {
+  padding: .75rem;
+  background-color: #F8EFBA;
+  border-radius: .25rem;
+  border: #EAB543 solid 1px;
+}
+
+/*
+  header
+*/
 
 header {
   background-color: #B33771;
@@ -37,116 +52,6 @@ header > .content > h1 > a {
   text-decoration: none;
 }
 
-main {
-  max-width: 800px;
-  margin: auto;
-  padding: .5rem;
-}
-
-main > .pages {
-  text-align: center;
-  font-weight: lighter;
-}
-
-main > .items {
-  display: grid;
-  gap: 2rem;
-  width: 100%;
-}
-
-@media only screen and (min-width: 600px) {
-  main > .items {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-main > .items > .item {
-  display: block;
-}
-
-main > .items > .item > a {
-  display: block;
-  width: 100%;
-  text-decoration: none;
-  color: #2C3A47;
-}
-
-main > .items > .item > a > .title {
-  font-size: 1.5rem;
-  padding: 0;
-  margin: .5rem 0;
-}
-
-main > .items > .item > a > .providers {
-  font-size: .75rem;
-  display: inline-block;
-  gap: .5rem;
-}
-
-nav {
-  display: flex;
-  margin: 5rem 0;
-  justify-content: space-between;
-}
-
-nav > a {
-  display: inline-block;
-}
-
-nav > a.next {
-  margin-left: auto;
-}
-
-.poster {
-  display: inline-block;
-  border-radius: .5rem;
-  overflow: hidden;
-}
-
-.poster > img {
-  display: block;
-  max-width: 100%;
-}
-
-.provider-tag {
-  display: inline-block;
-  background-color: #3B3B98;
-  border-radius: .25rem;
-  overflow: hidden;
-}
-
-.provider-tag > .name {
-  display: inline-block;
-  background-color: #182C61;
-  color: #EAB543;
-  font-weight: bolder;
-  padding: .25rem .5rem;
-}
-
-.provider-tag > .languages {
-  display: inline-flex;
-  gap: .5rem;
-  padding: .25rem .5rem;
-}
-
-.provider-tag > .languages > .language {
-  display: inline-block;
-  text-transform: uppercase;
-  font-weight: bolder;
-  color: #f1f2f6;
-}
-
-pre {
-  padding: .75rem;
-  background-color: #F8EFBA;
-  border-radius: .25rem;
-  border: #EAB543 solid 1px;
-}
-
-.hidden {
-  display: none;
-}
-
 .prowlarr-bar {
   margin: 0;
   padding: 1rem;
@@ -165,9 +70,174 @@ pre {
   padding: 0;
 }
 
+/*
+  main
+*/
+
+main {
+  max-width: 800px;
+  margin: auto;
+  padding: .5rem;
+}
+
+/*
+  footer
+*/
+
 footer {
   max-width: 800px;
   margin: 5rem auto;
   padding: .5rem;
   font-size: .75rem;
+}
+
+/*
+  pagination
+*/
+
+.pagination-status {
+  text-align: center;
+  font-weight: lighter;
+}
+
+nav {
+  display: flex;
+  margin: 5rem 0;
+  justify-content: space-between;
+}
+
+nav > a {
+  display: inline-block;
+}
+
+nav > a.next {
+  margin-left: auto;
+}
+
+/*
+  item
+*/
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  max-width: 100%;
+  margin: 1rem 0;
+  padding: .5rem;
+  background-color: white;
+  gap: .5rem;
+  box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, .5);
+  border-radius: .125rem;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 850px) {
+  .item {
+    display: block;
+  }
+}
+
+.item > .item-type {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bolder;
+  padding: .25rem .5rem;
+  font-size: .75rem;
+  border-radius: .125rem;
+  overflow: hidden;
+  background-color: #2C3A47;
+}
+
+.item > .item-type.movie {
+  background-color: #58B19F;
+}
+
+.item > .item-type.tv {
+  background-color: #EAB543;
+}
+
+.item > .poster {
+  display: block;
+  border-radius: .5rem;
+  overflow: hidden;
+  width: 120px;
+  flex-shrink: 0;
+}
+
+.item > .poster > img {
+  display: block;
+  width: 100%;
+}
+
+.item > .details {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+}
+
+.item > .details > * {
+  margin: .25rem 0;
+}
+
+.item > .details > .title {
+  font-size: 1.5rem;
+}
+
+.item > .details > .title,
+.item > .details > .external-links {
+  margin: 0 0 .5rem 0;
+}
+
+.item > .details > .provider {
+  border-radius: .25rem;
+  overflow: hidden;
+  background-color: #F8EFBA;
+}
+
+.item > .details > .provider > .header {
+  display: flex;
+  justify-content: space-between;
+  padding: .5rem;
+  border-radius: .25rem;
+  border: solid #F97F51 1px;
+}
+
+.item > .details > .provider > .header > .name {
+  font-weight: bolder;
+}
+
+.item > .details > .provider > .header > .name > .languages {
+  text-transform: uppercase;
+  font-size: .5rem;
+  vertical-align: middle;
+}
+
+.item > .details > .provider > .torrents {
+  padding: .25rem;
+}
+
+.item > .details > .provider > .torrents > .torrent {
+  display: flex;
+  gap: .25rem;
+  font-weight: lighter;
+  padding: .25rem;
+}
+
+.item > .details > .provider > .torrents > .torrent:nth-child(2n) {
+  background-color: rgba(255, 255, 255, .5);
+}
+
+.item > .details > .provider > .torrents > .torrent > .name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.item > .details > .provider > .torrents > .torrent > .size {
+  white-space: nowrap;
 }
