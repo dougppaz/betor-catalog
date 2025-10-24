@@ -23,7 +23,7 @@ const fetch = async (request, env, ctx) => {
   const itemsHTML = renderItems(results.map(({ item }) => item))
   console.log(results)
   return new Response(
-    renderBase(itemsHTML, { title: `Resultados da busca "${q}" - Catálogo Betor` }),
+    renderBase(itemsHTML, { title: `Resultados da busca "${q}" - Catálogo Betor`, q }),
     { headers: { 'Content-Type': 'text/html; charset=utf-8' } }
   )
 }

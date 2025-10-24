@@ -1,4 +1,4 @@
-export default (content, { title } = {}) => (`<!doctype html>
+export default (content, { title, q } = {}) => (`<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
@@ -22,6 +22,13 @@ export default (content, { title } = {}) => (`<!doctype html>
   </header>
   <div class="prowlarr-bar">
     <p>Utilize com o Prowlarr, baixe o nosso <a href="/static/catalogo-betor.yml" target="_black">Prowlarr Cardigann YML Definition</a></p>
+  </div>
+  <div class="search">
+    <p>Buscar:</p>
+    <form action="/search/">
+      <div class="field"><input name="q" required ${q ? `value="${q}"` : ''} /></div>
+      <div class="submit"><button type="submit">🔍</button></div>
+    </form>
   </div>
   <main>${content}</main>
   <footer>

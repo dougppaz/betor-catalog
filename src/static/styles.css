@@ -75,6 +75,48 @@ header > .content > h1 > a {
 }
 
 /*
+  search
+*/
+
+.search {
+  margin: 2rem auto;
+  max-width: 800px;
+}
+
+.search > p {
+  margin: 0;
+  font-size: .75rem;
+  text-transform: uppercase;
+  font-weight: bolder;
+}
+
+.search > form {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.search > form > .field {
+  flex: 1;
+}
+
+.search > form > .field > input {
+  width: 100%;
+  font-size: 1.5rem;
+}
+
+.search > form > .submit {
+  flex: 0 0 auto;
+}
+
+.search > form > .submit > button {
+  border: none;
+  background: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/*
   main
 */
 
