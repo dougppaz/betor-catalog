@@ -22,6 +22,7 @@ jobs:
         TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
       run: betor-catalog -b ${{ vars.BETOR_API_URL }} -a ${{ secrets.BETOR_API_AUTHORIZATION }} build-items
     - run: betor-catalog build
+    - run: cp src/_data/*.json src/static/data
     - run: npm install surge
     - run: npx surge dist ${{ vars.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
     - uses: cloudflare/wrangler-action@v3
