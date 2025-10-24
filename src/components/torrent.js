@@ -19,7 +19,7 @@ export default (item, provider, torrent) => (`
     data-torrent-num-peers="${torrent.torrent_num_peers}"
     data-torrent-num-seeds="${torrent.torrent_num_seeds}"
     data-torrent-inserted-at="${torrent.inserted_at}">
-      <div class="name">🧲&emsp;${torrent.torrent_name}</div>
+      <div class="name">🧲&emsp;${torrent.torrent_name || '-'}</div>
       <div class="size">${formatBytes(torrent.torrent_size)}</div>
     </div>
 `)
