@@ -4,6 +4,7 @@ import PQueue from 'p-queue'
 
 const ITEMS_PATH = 'src/_data/items.json'
 const ITEMS_GROUP_BY_IMDB_ID_PATH = 'src/_data/itemsByImdbId.json'
+const ITEMS_GROUP_BY_IMDB_ID_AND_SEASON_PATH = 'src/_data/itemsByImdbIdAndSeason.json'
 const ITEMS_GROUP_BY_TMDB_ID_PATH = 'src/_data/itemsByTmdbId.json'
 
 class BetorCatalog {
@@ -24,6 +25,8 @@ class BetorCatalog {
     this.write(ITEMS_PATH, enrichedItems)
     const itemsByImdb = await this.groupBy(enrichedItems, 'imdb_id')
     this.write(ITEMS_GROUP_BY_IMDB_ID_PATH, itemsByImdb)
+    const itemsByImdbAndSeason = await this.groupBySeason(enrichedItems, 'imdb_id')
+    this.write(ITEMS_GROUP_BY_IMDB_ID_AND_SEASON_PATH, itemsByImdbAndSeason)
     const itemsByTmdb = await this.groupBy(enrichedItems, 'tmdb_id')
     this.write(ITEMS_GROUP_BY_TMDB_ID_PATH, itemsByTmdb)
   }
@@ -137,6 +140,37 @@ class BetorCatalog {
       groups[item[attr]].push(item)
     })
     return Object.keys(groups).map(k => ({ key: k, items: groups[k] }))
+  }
+
+  itemSeason (item, season) {
+    const newItem = structuredClone(item)
+    newItem.providers = newItem.providers
+      .map(provider => ({
+        ...provider,
+        torrents: provider.torrents.filter(t => t.seasons.includes(season))
+      }))
+      .filter(provider => provider.torrents.length > 0)
+    return newItem
+  }
+
+  groupBySeason (items, attr) {
+    const groups = {}
+    items.forEach(item => {
+      const seasons = [
+        ...new Set(item.providers.flatMap(p => p.torrents).flatMap(t => t.seasons))
+      ]
+      seasons.forEach(season => {
+        const key = [item[attr], season].join('|')
+        if (!Object.keys(groups).includes(key)) {
+          groups[key] = []
+        }
+        groups[key].push(this.itemSeason(item, season))
+      })
+    })
+    return Object.keys(groups).map(v => {
+      const [k, season] = v.split('|', 2)
+      return { key: k, season, items: groups[v] }
+    })
   }
 
   write (path, items) {
