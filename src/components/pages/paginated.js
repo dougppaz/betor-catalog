@@ -1,10 +1,10 @@
 import renderBase from './base.js'
 import renderItems from '../items.js'
 
-export default (pagination) => {
+export default (pagination, t = 'Catálogo Betor') => {
   const title = pagination.pageNumber > 0
-    ? `Catálogo Betor - Página ${pagination.pageNumber + 1}`
-    : 'Catálogo Betor'
+    ? `${t} - Página ${pagination.pageNumber + 1}`
+    : t
   const itemsHTML = renderItems(pagination.items)
   const previousTag = pagination.href.previous
     ? `<a href="${pagination.href.previous}" class="previous">← Anterior</a>`
