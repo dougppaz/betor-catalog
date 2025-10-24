@@ -227,6 +227,10 @@ nav > a.next {
   padding: .25rem;
 }
 
+.item > .details > .provider > .torrents > .torrent:nth-child(2n) {
+  background-color: rgba(255, 255, 255, .5);
+}
+
 .item > .details > .provider > .torrents > .torrent > .name {
   white-space: nowrap;
   overflow: hidden;
@@ -236,8 +240,4 @@ nav > a.next {
 
 .item > .details > .provider > .torrents > .torrent > .size {
   white-space: nowrap;
-}
-
-.item > .details > .provider > .torrents > .torrent:nth-child(2n) {
-  background-color: rgba(255, 255, 255, .5);
 }
