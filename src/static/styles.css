@@ -97,6 +97,7 @@ header > .content > .item-types > a {
 .search {
   margin: 2rem auto;
   max-width: 800px;
+  padding: .5rem;
 }
 
 .search > p {
