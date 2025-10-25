@@ -7,7 +7,6 @@ const MOVIES_PATH = 'src/_data/movies.json'
 const TVS_PATH = 'src/_data/tvs.json'
 const ITEMS_GROUP_BY_IMDB_ID_PATH = 'src/_data/itemsByImdbId.json'
 const ITEMS_GROUP_BY_IMDB_ID_AND_SEASON_PATH = 'src/_data/itemsByImdbIdAndSeason.json'
-const ITEMS_GROUP_BY_TMDB_ID_PATH = 'src/_data/itemsByTmdbId.json'
 
 class BetorCatalog {
   constructor (options) {
@@ -15,15 +14,14 @@ class BetorCatalog {
     this.env = {
       tmdbApiKey: process.env.TMDB_API_KEY
     }
-    this.enrichQueue = new PQueue({ intervalCap: 2, interval: 1000 })
+    this.tmdbApiQueue = new PQueue({ intervalCap: 2, interval: 1000 })
   }
 
   async buildItems () {
     console.log('building items data...')
     const items = await this.fetchCatalogItems()
     console.log(`${items.length} catalog items found`)
-    const uniqueItems = this.removeDuplicateItems(items)
-    const enrichedItems = await this.enrichItems(uniqueItems)
+    const enrichedItems = await this.enrichItems(items)
     this.write(ITEMS_PATH, enrichedItems)
     this.write(MOVIES_PATH, enrichedItems.filter(({ item_type: itemType }) => (itemType === 'movie')))
     this.write(TVS_PATH, enrichedItems.filter(({ item_type: itemType }) => (itemType === 'tv')))
@@ -31,8 +29,6 @@ class BetorCatalog {
     this.write(ITEMS_GROUP_BY_IMDB_ID_PATH, itemsByImdb)
     const itemsByImdbAndSeason = await this.groupBySeason(enrichedItems, 'imdb_id')
     this.write(ITEMS_GROUP_BY_IMDB_ID_AND_SEASON_PATH, itemsByImdbAndSeason)
-    const itemsByTmdb = await this.groupBy(enrichedItems, 'tmdb_id')
-    this.write(ITEMS_GROUP_BY_TMDB_ID_PATH, itemsByTmdb)
   }
 
   async fetchCatalogItems (page = 1, items = []) {
@@ -56,25 +52,42 @@ class BetorCatalog {
   }
 
   async enrichItems (items) {
-    let i = 0
-    return Promise.all(items.map(item => this.enrichQueue.add(() => {
-      i++
-      console.log(`[${i}/${items.length}]`)
-      return this.enrichItem(item)
-    })))
+    return Promise.all(items.map(item => (this.enrichItem(item))))
   }
 
   async enrichItem (item) {
-    if (item.imdb_id) {
-      return await this.enrichItemFromImdb(item)
+    const infoCache = this.getInfoCache(item.imdb_id)
+    if (infoCache) {
+      console.info(`Item info loaded from cache ${item.imdb_id}`)
+      return { ...item, info: infoCache }
     }
-    if (item.tmdb_id) {
-      return await this.enrichItemFromTmdb(item)
+    if (item.imdb_id) {
+      const itemInfo = await this.getItemInfoFromImdb(item)
+      this.setInfoCache(item.imdb_id, itemInfo)
+      return { ...item, info: itemInfo }
     }
     return item
   }
 
-  async enrichItemFromImdb (item) {
+  getInfoCache (imdbId) {
+    try {
+      const cacheValue = fs.readFileSync(`.cache/info-${imdbId}.json`)
+      return JSON.parse(cacheValue)
+    } catch (err) {
+      return null
+    }
+  }
+
+  setInfoCache (imdbId, itemInfo) {
+    try {
+      this.write(`.cache/info-${imdbId}.json`, itemInfo)
+      console.info(`${imdbId} cached!`)
+    } catch (err) {
+      console.debug(`Fail to cache item info ${imdbId}`)
+    }
+  }
+
+  async getItemInfoFromImdb (item) {
     const url = `https://api.themoviedb.org/3/find/${item.imdb_id}?external_source=imdb_id&language=pt-BR`
     const options = {
       method: 'GET',
@@ -83,8 +96,10 @@ class BetorCatalog {
         Authorization: `Bearer ${this.env.tmdbApiKey}`
       }
     }
-    console.log(`fetching from tmdb imdb_id:${item.imdb_id} data: ${url}`)
-    const res = await fetch(url, options)
+    const res = await this.tmdbApiQueue.add(() => {
+      console.log(`fetching from tmdb imdb_id:${item.imdb_id} data: ${url}`)
+      return fetch(url, options)
+    })
     if (!res.ok) {
       throw new Error(`Error to fetch ${url}: ${res.status}`)
     }
@@ -95,44 +110,7 @@ class BetorCatalog {
     if (item.item_type === 'tv' && !findData.tv_results) {
       throw new Error(`TV Show not found at TMDB with imdb_id ${item.imdb_id}`)
     }
-    const itemInfo = (item.item_type === 'movie' && findData.movie_results[0]) || (item.item_type === 'tv' && findData.tv_results[0])
-    return {
-      info: itemInfo,
-      ...item
-    }
-  }
-
-  async enrichItemFromTmdb (item) {
-    const url = `https://api.themoviedb.org/3/${item.item_type}/${item.tmdb_id}?language=pt-BR`
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${this.env.tmdbApiKey}`
-      }
-    }
-    console.log(`fetching from tmdb tmdb_id:${item.tmdb_id} data: ${url}`)
-    const res = await this.tmdbApiQueue.add(() => fetch(url, options))
-    if (!res.ok) {
-      throw new Error(`Error to fetch ${url}: ${res.status}`)
-    }
-    const itemInfo = await res.json()
-    return {
-      info: itemInfo,
-      ...item
-    }
-  }
-
-  removeDuplicateItems (items) {
-    const ks = []
-    return items.filter(item => {
-      const k = `${item.imdb_id}-${item.tmdb_id}-${item.item_type}`
-      if (ks.includes(k)) {
-        return false
-      }
-      ks.push(k)
-      return true
-    })
+    return (item.item_type === 'movie' && findData.movie_results[0]) || (item.item_type === 'tv' && findData.tv_results[0])
   }
 
   groupBy (items, attr) {
@@ -177,8 +155,8 @@ class BetorCatalog {
     })
   }
 
-  write (path, items) {
-    fs.writeFileSync(path, JSON.stringify(items, null, 2))
+  write (path, data) {
+    fs.writeFileSync(path, JSON.stringify(data, null, 2))
   }
 
   async serve () {
