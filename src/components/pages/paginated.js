@@ -1,7 +1,7 @@
 import renderBase from './base.js'
 import renderItems from '../items.js'
 
-export default (pagination, t = 'Catálogo Betor') => {
+export default (pagination, t = 'Catálogo BeTor') => {
   const title = pagination.pageNumber > 0
     ? `${t} - Página ${pagination.pageNumber + 1}`
     : t

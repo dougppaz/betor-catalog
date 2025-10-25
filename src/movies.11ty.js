@@ -18,6 +18,6 @@ export default class Movies {
   }
 
   render ({ pagination }) {
-    return renderPaginatedPage(pagination, 'Catálogo Betor Filmes')
+    return renderPaginatedPage(pagination, 'Catálogo BeTor Filmes')
   }
 }

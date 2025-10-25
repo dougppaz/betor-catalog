@@ -3,7 +3,7 @@ export default (content, { title, q } = {}) => (`<!doctype html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${title || 'Catálogo Betor'}</title>
+  <title>${title || 'Catálogo BeTor'}</title>
   <link rel="stylesheet" href="/static/styles.css">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DB54CJJ7SK"></script>
@@ -17,7 +17,7 @@ export default (content, { title, q } = {}) => (`<!doctype html>
 <body>
   <header>
     <div class="content">
-      <h1><a href="/">🎬 <span>Catálogo Betor</span></a></h1>
+      <h1><a href="/">🎬 <span>Catálogo BeTor</span></a></h1>
       <div class="item-types">
         <a href="/filmes/">Filmes</a>
         <a href="/series/">Séries</a>

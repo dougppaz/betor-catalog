@@ -18,6 +18,6 @@ export default class TVs {
   }
 
   render ({ pagination }) {
-    return renderPaginatedPage(pagination, 'Catálogo Betor Séries')
+    return renderPaginatedPage(pagination, 'Catálogo BeTor Séries')
   }
 }

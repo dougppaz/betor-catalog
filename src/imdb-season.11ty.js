@@ -15,6 +15,6 @@ export default class IMDB {
 
   render ({ group }) {
     const itemsHTML = renderItems(group.items)
-    return renderBase(itemsHTML, { title: `IMDB #${group.key} Temporada ${group.season} - Catálogo Betor` })
+    return renderBase(itemsHTML, { title: `IMDB #${group.key} Temporada ${group.season} - Catálogo BeTor` })
   }
 }

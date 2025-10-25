@@ -1,4 +1,4 @@
-export const itemPosterURL = item => (item.info?.poster_path ? `https://image.tmdb.org/t/p/w200${item.info?.poster_path}` : 'https://placehold.co/200x300?text=Betor')
+export const itemPosterURL = item => (item.info?.poster_path ? `https://image.tmdb.org/t/p/w200${item.info?.poster_path}` : 'https://placehold.co/200x300?text=BeTor')
 
 export const itemTitle = item => (item.info?.title || item.info?.name)
 
