@@ -16,15 +16,15 @@ jobs:
     - uses: actions/setup-node@v5
       with:
         node-version: 22
+    - uses: actions/cache@v4
+      with:
+        path: .cache
+        key: betor-cache
     - run: npm ci
     - run: npm link
     - env:
         TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
       run: betor-catalog -b ${{ vars.BETOR_API_URL }} -a ${{ secrets.BETOR_API_AUTHORIZATION }} build-items
-    - uses: actions/cache@v4
-      with:
-        path: .cache
-        key: betor-cache
     - run: betor-catalog build
     - run: cp src/_data/*.json dist/static/data
     - run: npm install surge
