@@ -34,6 +34,7 @@ jobs:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
   purge-cache:
     runs-on: ubuntu-latest
+    needs: build-and-deploy
     steps:
     - uses: jakejarvis/cloudflare-purge-action@master
       env:
