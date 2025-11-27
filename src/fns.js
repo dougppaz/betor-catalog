@@ -7,6 +7,7 @@ export const providerName = slug => {
   if (slug === 'bludv') return 'BLUDV'
   if (slug === 'torrent-dos-filmes') return 'Torrent dos Filmes'
   if (slug === 'starck-filmes') return 'Starck Filmes'
+  if (slug === 'rede-torrent') return 'Rede Torrent'
   return slug
 }
 
