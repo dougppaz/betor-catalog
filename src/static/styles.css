@@ -14,6 +14,10 @@ body {
   padding: 0;
 }
 
+body:has(.modal) {
+  overflow: hidden;
+}
+
 a {
   text-decoration: none;
   color: #1B9CFC;
@@ -28,6 +32,10 @@ pre {
 
 .text-center {
   text-align: center;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 /*
@@ -304,4 +312,83 @@ nav > a.next {
 
 .item > .details > .provider > .torrents > .torrent > .size {
   white-space: nowrap;
+}
+
+/*
+  modal
+*/
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  overflow: scroll;
+  padding: 2rem 0;
+}
+
+.modal > .close,
+.modal > .modal-content {
+  margin: 1rem auto;
+  max-width: 600px;
+}
+
+.modal > .close {
+  text-align: right;
+}
+
+.modal > .close > button {
+  font-size: 2rem;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.modal > .modal-content {
+  margin: 1rem auto;
+  padding: 1rem;
+  background-color: white;
+  border-radius: .25rem;
+  box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, .5);
+}
+
+.modal > .modal-content > h1,
+.modal > .modal-content > h2 {
+  padding: 0;
+}
+
+.modal > .modal-content > h1 {
+  margin: 1.5rem 0;
+  font-size: 1rem;
+  font-weight: bolder;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.modal > .modal-content > h2 {
+  margin: 1rem 0;
+  font-size: .75rem;
+}
+
+.modal > .modal-content > ul > li {
+  font-family: monospace;
+}
+
+.modal > .modal-content > .download {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.modal > .modal-content > .download > a {
+  display: inline-block;
+  padding: 1rem 1.5rem;
+  color: white;
+  background-color: #3B3B98;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-radius: .25rem;
+  letter-spacing: .25rem;
 }
