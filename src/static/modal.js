@@ -2,6 +2,8 @@ const openModal = (bodyElem, torrentElem) => {
   const torrentName = torrentElem.dataset.torrentName
   const torrentMagnetUri = torrentElem.dataset.torrentMagnetUri
   const torrentFiles = torrentElem.dataset.torrentFiles ? torrentElem.dataset.torrentFiles.split(';') : []
+  const torrentNumPeers = torrentElem.dataset.torrentNumPeers
+  const torrentNumSeeds = torrentElem.dataset.torrentNumSeeds
 
   console.log('open model...', { torrentName, torrentMagnetUri, torrentFiles })
 
@@ -18,10 +20,8 @@ const openModal = (bodyElem, torrentElem) => {
     <div class="close"></div>
     <div class="modal-content">
       <h1>${torrentName}</h1>
+      <p><strong>Seeds:</strong> ${torrentNumSeeds} / <strong>Peers:</strong> ${torrentNumPeers}</p>
       ${filesContent}
-      <div class="download">
-        <a href="${torrentMagnetUri}">Download</a>
-      </div>
     </div>
   `
 

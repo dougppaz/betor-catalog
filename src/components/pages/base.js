@@ -13,6 +13,7 @@ export default (content, { title, q } = {}) => (`<!doctype html>
     gtag('js', new Date());
     gtag('config', 'G-DB54CJJ7SK');
   </script>
+  <script async src="/static/modal.js"></script>
 </head>
 <body>
   <header>
