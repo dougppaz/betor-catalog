@@ -8,7 +8,8 @@ const fuse = new Fuse(items, {
     'info.title',
     'info.original_title',
     'info.name',
-    'info.original_name'
+    'info.original_name',
+    'info.release_date'
   ],
   threshold: 0.2
 })
