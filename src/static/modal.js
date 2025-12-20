@@ -10,12 +10,14 @@ const openModal = (bodyElem, torrentElem) => {
   // modal element
   const modalElem = document.createElement('div')
   modalElem.classList.add('modal')
-  const filesContent = torrentFiles ? `
+  const filesContent = torrentFiles
+    ? `
     <h2>Arquivos:</h2>
     <ul class="files">
       ${torrentFiles.map((fileName) => (`<li>${fileName}</li>`)).join('')}
     </ul>
-  ` : ''
+  `
+    : ''
   modalElem.innerHTML = `
     <div class="close"></div>
     <div class="modal-content">
