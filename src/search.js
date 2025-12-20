@@ -9,7 +9,9 @@ const fuse = new Fuse(items, {
     'info.original_title',
     'info.name',
     'info.original_name',
-    'info.release_date'
+    'info.release_date',
+    'imdb_id',
+    'tmdb_id'
   ],
   threshold: 0.2
 })
