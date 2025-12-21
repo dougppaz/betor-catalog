@@ -332,7 +332,16 @@ nav > a.next {
 .modal > .close,
 .modal > .modal-content {
   margin: 1rem auto;
-  max-width: 600px;
+  width: 600px;
+  box-sizing: border-box;
+}
+
+@media only screen and (max-width: calc(600px + 2rem)) {
+  .modal > .close,
+  .modal > .modal-content {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+  }
 }
 
 .modal > .close {
@@ -348,7 +357,6 @@ nav > a.next {
 }
 
 .modal > .modal-content {
-  margin: 1rem auto;
   padding: 1rem;
   background-color: white;
   border-radius: .25rem;
