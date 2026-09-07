@@ -33,6 +33,8 @@ const expandSearchItem = (item) => ({
     torrent_files: nested.fs,
     torrent_num_peers: nested.np,
     torrent_num_seeds: nested.ns,
+    torrent_is_dying: nested.td,
+    torrent_is_dead: nested.tx,
     seasons: nested.ss,
     updated_at: nested.ua,
     inserted_at: nested.ia

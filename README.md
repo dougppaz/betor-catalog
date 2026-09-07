@@ -116,6 +116,10 @@ Informa o valor do cabeçalho `Authorization` no formato Basic para acessar a AP
 
 Limita a quantidade de páginas consultadas na etapa de coleta de itens brutos. Se não for informado, o projeto usa o comportamento padrão sem limite.
 
+### `--exclude-dead-torrents`
+
+Exclui torrents marcados com `torrent_is_dead = true` durante o comando `betor-catalog data-catalog-items`.
+
 ## Comandos npm
 
 ### `npm ci`

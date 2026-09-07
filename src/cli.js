@@ -9,8 +9,9 @@ dotenv.config()
 program
   .option('-b, --betor-api-url <string>', 'Betor API Base URL', 'http://localhost:8000')
   .option('-a, --betor-api-authorization <string>', 'Betor API Basic Authorization Header value')
-  .option('-p, --pages-limit <number>', 'Limit number of pages to fetch for fetch-raw-items (optional, no limit by default)')
-  .argument('<action>', 'fetch-raw-items|build-items|serve|build')
+  .option('--exclude-dead-torrents', 'Exclude torrents where torrent_is_dead is true when building catalog data')
+  .option('-p, --pages-limit <number>', 'Limit number of pages to fetch for data-fetch-items (optional, no limit by default)')
+  .argument('<action>', 'data-fetch-items|data-catalog-items|serve|build')
   .action(async (action, options) => {
     console.log('action:', action)
     console.log('options:', options)

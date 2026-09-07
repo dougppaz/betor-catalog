@@ -35,6 +35,7 @@ export default (item) => {
             <div class="peers-seeds">
               <span><strong>Seeds:</strong> ${item.torrent_num_seeds || '-'}</span>
               <span><strong>Peers:</strong> ${item.torrent_num_peers || '-'}</span>
+              ${item.torrent_is_dying ? '<span role="img" aria-label="Torrent em risco" title="Torrent em risco">💀</span>' : ''}
             </div>
             ${item.torrent_size ? `<div class="size">${formatBytes(item.torrent_size)}</div>` : ''}
           </div>

@@ -35,6 +35,11 @@ class BetorCatalog {
     fs.writeFileSync(path, JSON.stringify(data, null, 2))
   }
 
+  sanitizeItemFields (item) {
+    const { torrent_failure_days: _unusedFailureDays, ...sanitizedItem } = item
+    return sanitizedItem
+  }
+
   /*
     Cache Utils
   */
@@ -154,6 +159,8 @@ class BetorCatalog {
         fs: item.torrent_files,
         np: item.torrent_num_peers,
         ns: item.torrent_num_seeds,
+        td: item.torrent_is_dying,
+        tx: item.torrent_is_dead,
         ss: item.seasons,
         ua: item.updated_at,
         ia: item.inserted_at
@@ -196,7 +203,7 @@ class BetorCatalog {
       item.item_type != null &&
       item.magnet_uri != null &&
       item.torrent_size != null
-    ))
+    )).map(item => this.sanitizeItemFields(item))
     console.log(`${validItems.length} valid items`)
     const sortedItems = validItems.sort((a, b) => new Date(b.inserted_at) - new Date(a.inserted_at))
 
@@ -223,11 +230,22 @@ class BetorCatalog {
     const items = this.read(ITEMS_PATH)
     console.log(`${items.length} items loaded`)
 
-    const validItems = items.filter(item => (
+    const sanitizedItems = items.map(item => this.sanitizeItemFields(item))
+
+    const baseValidItems = sanitizedItems.filter(item => (
       item.item_type != null &&
       item.updated_at != null &&
       item.imdb_id != null &&
       item.tmdb_id != null
+    ))
+
+    if (this.options.excludeDeadTorrents) {
+      const excludedDeadTorrentsCount = baseValidItems.filter(item => item.torrent_is_dead === true).length
+      console.log(`excluding ${excludedDeadTorrentsCount} dead torrents (--exclude-dead-torrents)`)
+    }
+
+    const validItems = baseValidItems.filter(item => (
+      (!this.options.excludeDeadTorrents || item.torrent_is_dead !== true)
     ))
     console.log(`${validItems.length} valid items`)
 
