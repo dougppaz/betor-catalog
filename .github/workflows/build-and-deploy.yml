@@ -26,12 +26,19 @@ jobs:
     - run: npm link
     - run: betor-catalog -b ${{ vars.BETOR_API_URL }} -a ${{ secrets.BETOR_API_AUTHORIZATION }} data-fetch-items
     - env:
+        DATA_DOMAIN: ${{ vars.SURGE_DATA_DOMAIN }}
         TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
       run: betor-catalog --exclude-dead-torrents data-catalog-items
-    - run: betor-catalog build
-    - run: cp src/_data/*.json dist/static/data
+    - env:
+        DATA_DOMAIN: ${{ vars.SURGE_DATA_DOMAIN }}
+      run: betor-catalog build
+    - run: mkdir -p deploy/site deploy/data
+    - run: cp -R dist/. deploy/site/
+    - run: rm -rf deploy/site/static/data
+    - run: cp src/_data/*.json deploy/data
     - run: npm install surge
-    - run: npx surge dist ${{ vars.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
+    - run: npx surge deploy/site ${{ vars.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
+    - run: npx surge deploy/data ${{ vars.SURGE_DATA_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
     - uses: cloudflare/wrangler-action@v3
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
