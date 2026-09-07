@@ -41,6 +41,8 @@ O projeto depende de uma API BeTor para buscar os itens de origem. Você pode:
 - apontar o CLI para a sua API com `--betor-api-url`;
 - autenticar o acesso com `--betor-api-authorization` quando necessário.
 
+A documentação atualizada do contrato da API fica em [docs/betor-openapi.json](docs/betor-openapi.json) e o contexto de uso no projeto está em [docs/betor-api.md](docs/betor-api.md).
+
 ## Fluxo completo de build com `betor-catalog`
 
 Depois da instalação, este é o fluxo principal do projeto. A partir daqui, o comando `betor-catalog` passa a ser usado para baixar os dados, consolidar o catálogo e gerar o catálogo final.

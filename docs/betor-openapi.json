@@ -1,0 +1,2907 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FastAPI",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/metrics": {
+      "get": {
+        "summary": "Metrics",
+        "description": "Endpoint that serves Prometheus metrics.",
+        "operationId": "metrics_metrics_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/items/": {
+      "get": {
+        "summary": "List Items",
+        "operationId": "list_items_v1_items__get",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ItemsSortEnum",
+              "default": "-inserted_at"
+            }
+          },
+          {
+            "name": "imdb_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Imdb Id"
+            }
+          },
+          {
+            "name": "tmdb_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Tmdb Id"
+            }
+          },
+          {
+            "name": "item_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ItemType"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Item Type"
+            }
+          },
+          {
+            "name": "season",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Season"
+            }
+          },
+          {
+            "name": "episode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Episode"
+            }
+          },
+          {
+            "name": "torrent_is_dying",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtra itens pelo estado de saude do torrent",
+              "title": "Torrent Is Dying"
+            },
+            "description": "Filtra itens pelo estado de saude do torrent"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Page number",
+              "default": 1,
+              "title": "Page"
+            },
+            "description": "Page number"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Page size",
+              "default": 50,
+              "title": "Size"
+            },
+            "description": "Page size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_ItemSchema_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/items/{item_id}/": {
+      "get": {
+        "summary": "Get Item",
+        "operationId": "get_item_v1_items__item_id___get",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/raw-items/": {
+      "get": {
+        "summary": "List Raw Items",
+        "operationId": "list_raw_items_v1_raw_items__get",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/RawItemsSortEnum",
+              "default": "-inserted_at"
+            }
+          },
+          {
+            "name": "provider_slug",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Provider Slug"
+            }
+          },
+          {
+            "name": "provider_url",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Provider Url"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Page number",
+              "default": 1,
+              "title": "Page"
+            },
+            "description": "Page number"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Page size",
+              "default": 50,
+              "title": "Size"
+            },
+            "description": "Page size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_RawItemSchema_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/raw-items/{raw_item_id}/": {
+      "get": {
+        "summary": "Get Raw Item",
+        "operationId": "get_raw_item_v1_raw_items__raw_item_id___get",
+        "parameters": [
+          {
+            "name": "raw_item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Raw Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RawItemSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/provider-url-imdb-mappings/": {
+      "get": {
+        "summary": "List Provider Url Imdb Mappings",
+        "operationId": "list_provider_url_imdb_mappings_v1_provider_url_imdb_mappings__get",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ProviderURLIMDBMappingSortEnum",
+              "default": "-inserted_at"
+            }
+          },
+          {
+            "name": "provider_url",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Provider Url"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Page number",
+              "default": 1,
+              "title": "Page"
+            },
+            "description": "Page number"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Page size",
+              "default": 50,
+              "title": "Size"
+            },
+            "description": "Page size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_ProviderURLIMDBMappingSchema_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/provider-url-imdb-mappings/{id}/": {
+      "delete": {
+        "summary": "Delete Provider Url Imdb Mapping",
+        "operationId": "delete_provider_url_imdb_mapping_v1_provider_url_imdb_mappings__id___delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "ProviderURLIMDBMapping id to delete",
+              "title": "Id"
+            },
+            "description": "ProviderURLIMDBMapping id to delete"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/scrape/": {
+      "post": {
+        "summary": "Scrape",
+        "operationId": "scrape_v1_scrape__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScrapePayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScrapeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/job-monitors/{job_monitor_id}/": {
+      "get": {
+        "summary": "Detail Job Monitor",
+        "operationId": "detail_job_monitor_v1_job_monitors__job_monitor_id___get",
+        "parameters": [
+          {
+            "name": "job_monitor_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Monitor Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobMonitorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/search/": {
+      "get": {
+        "summary": "Search",
+        "operationId": "search_v1_search__get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ItemsSortEnum",
+              "default": "-inserted_at"
+            }
+          },
+          {
+            "name": "imdb_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Imdb Id"
+            }
+          },
+          {
+            "name": "tmdb_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Tmdb Id"
+            }
+          },
+          {
+            "name": "item_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ItemType"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Item Type"
+            }
+          },
+          {
+            "name": "season",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Season"
+            }
+          },
+          {
+            "name": "episode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Episode"
+            }
+          },
+          {
+            "name": "deep",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 3,
+              "title": "Deep"
+            }
+          },
+          {
+            "name": "scrape_timeout",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 30,
+              "title": "Scrape Timeout"
+            }
+          },
+          {
+            "name": "process_raw_item_timeout",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 30,
+              "title": "Process Raw Item Timeout"
+            }
+          },
+          {
+            "name": "provider",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "comando-torrents",
+                      "bludv",
+                      "torrent-dos-filmes",
+                      "starck-filmes",
+                      "rede-torrent",
+                      "sem-torrent"
+                    ],
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Provider"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Page number",
+              "default": 1,
+              "title": "Page"
+            },
+            "description": "Page number"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Page size",
+              "default": 50,
+              "title": "Size"
+            },
+            "description": "Page size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchPage_ItemSchema_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/catalog/": {
+      "get": {
+        "summary": "Catalog",
+        "operationId": "catalog_v1_catalog__get",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/CatalogItemsSortEnum",
+              "default": "-last_updated"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Page number",
+              "default": 1,
+              "title": "Page"
+            },
+            "description": "Page number"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Page size",
+              "default": 50,
+              "title": "Size"
+            },
+            "description": "Page size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_CatalogItem_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/normalize-items-tmdb-id/": {
+      "post": {
+        "summary": "Normalize Items Tmdb Id",
+        "operationId": "normalize_items_tmdb_id_v1_admin_normalize_items_tmdb_id__post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminNormalizeItemsTMDBIdResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/determines-imdb-tmdb-id/": {
+      "post": {
+        "summary": "Determines Imdb Tmdb Id",
+        "operationId": "determines_imdb_tmdb_id_v1_admin_determines_imdb_tmdb_id__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminDeterminesIMDBTMDBIdPayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/AdminDeterminesIMDBTMDBIdResult"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AdminDeterminesIMDBTMDBIdRawItemNotFoundError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AdminDeterminesIMDBTMDBIdValueError"
+                    }
+                  ],
+                  "title": "Response Determines Imdb Tmdb Id V1 Admin Determines Imdb Tmdb Id  Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/maps-provider-url-imdb/": {
+      "post": {
+        "summary": "Maps Provider Url Imdb",
+        "operationId": "maps_provider_url_imdb_v1_admin_maps_provider_url_imdb__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminMapsProviderURLIMDBPayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminMapsProviderURLIMDBResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/download-items/": {
+      "get": {
+        "summary": "Download Items",
+        "operationId": "download_items_v1_admin_download_items__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminDownloadItemsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/bulk-update-items/": {
+      "post": {
+        "summary": "Bulk Update Items",
+        "description": "Dispatch maintenance tasks for stale items.",
+        "operationId": "bulk_update_items_v1_admin_bulk_update_items__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BulkUpdateItemsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BulkUpdateItemsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AdminDeterminesIMDBTMDBIdPayload": {
+        "properties": {
+          "provider_url": {
+            "type": "string",
+            "title": "Provider Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "provider_url"
+        ],
+        "title": "AdminDeterminesIMDBTMDBIdPayload"
+      },
+      "AdminDeterminesIMDBTMDBIdRawItemNotFoundError": {
+        "properties": {
+          "error_code": {
+            "type": "string",
+            "const": "raw-item-not-found",
+            "title": "Error Code",
+            "default": "raw-item-not-found"
+          }
+        },
+        "type": "object",
+        "title": "AdminDeterminesIMDBTMDBIdRawItemNotFoundError"
+      },
+      "AdminDeterminesIMDBTMDBIdResult": {
+        "properties": {
+          "raw_item": {
+            "$ref": "#/components/schemas/RawItem"
+          },
+          "imdb_id": {
+            "type": "string",
+            "title": "Imdb Id"
+          },
+          "tmdb_id": {
+            "type": "string",
+            "title": "Tmdb Id"
+          },
+          "item_type": {
+            "$ref": "#/components/schemas/ItemType"
+          }
+        },
+        "type": "object",
+        "required": [
+          "raw_item",
+          "imdb_id",
+          "tmdb_id",
+          "item_type"
+        ],
+        "title": "AdminDeterminesIMDBTMDBIdResult"
+      },
+      "AdminDeterminesIMDBTMDBIdValueError": {
+        "properties": {
+          "error_code": {
+            "type": "string",
+            "const": "value-error",
+            "title": "Error Code",
+            "default": "value-error"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "AdminDeterminesIMDBTMDBIdValueError"
+      },
+      "AdminDownloadItemsResponse": {
+        "properties": {
+          "items_total": {
+            "type": "integer",
+            "title": "Items Total"
+          },
+          "dump_time_seconds": {
+            "type": "number",
+            "title": "Dump Time Seconds"
+          },
+          "download_url": {
+            "type": "string",
+            "title": "Download Url"
+          },
+          "generated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Generated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items_total",
+          "dump_time_seconds",
+          "download_url",
+          "generated_at"
+        ],
+        "title": "AdminDownloadItemsResponse"
+      },
+      "AdminMapsProviderURLIMDBPayload": {
+        "properties": {
+          "provider_url": {
+            "type": "string",
+            "title": "Provider Url"
+          },
+          "imdb_id": {
+            "type": "string",
+            "title": "Imdb Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "provider_url",
+          "imdb_id"
+        ],
+        "title": "AdminMapsProviderURLIMDBPayload"
+      },
+      "AdminMapsProviderURLIMDBResult": {
+        "properties": {
+          "provider_url_imdb_mapping": {
+            "$ref": "#/components/schemas/ProviderURLIMDBMapping"
+          },
+          "insert_or_update_result": {
+            "type": "string",
+            "enum": [
+              "inserted",
+              "updated",
+              "no_change"
+            ],
+            "title": "Insert Or Update Result"
+          }
+        },
+        "type": "object",
+        "required": [
+          "provider_url_imdb_mapping",
+          "insert_or_update_result"
+        ],
+        "title": "AdminMapsProviderURLIMDBResult"
+      },
+      "AdminNormalizeItemsTMDBIdResult": {
+        "properties": {
+          "success": {
+            "items": {
+              "$ref": "#/components/schemas/AdminNormalizeItemsTMDBIdResultSucess"
+            },
+            "type": "array",
+            "title": "Success"
+          },
+          "failed": {
+            "items": {
+              "$ref": "#/components/schemas/AdminNormalizeItemsTMDBIdResultFailed"
+            },
+            "type": "array",
+            "title": "Failed"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "failed"
+        ],
+        "title": "AdminNormalizeItemsTMDBIdResult"
+      },
+      "AdminNormalizeItemsTMDBIdResultFailed": {
+        "properties": {
+          "item_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Id"
+          },
+          "imdb_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imdb Id"
+          },
+          "exception_traceback": {
+            "type": "string",
+            "title": "Exception Traceback"
+          }
+        },
+        "type": "object",
+        "required": [
+          "item_id",
+          "imdb_id",
+          "exception_traceback"
+        ],
+        "title": "AdminNormalizeItemsTMDBIdResultFailed"
+      },
+      "AdminNormalizeItemsTMDBIdResultSucess": {
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "title": "Item Id"
+          },
+          "imdb_id": {
+            "type": "string",
+            "title": "Imdb Id"
+          },
+          "tmdb_id": {
+            "type": "string",
+            "title": "Tmdb Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "item_id",
+          "imdb_id",
+          "tmdb_id"
+        ],
+        "title": "AdminNormalizeItemsTMDBIdResultSucess"
+      },
+      "BulkUpdateItemsRequest": {
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "maximum": 1000.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "description": "Max items to process",
+            "default": 50
+          },
+          "exclude_updated_within_days": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Exclude Updated Within Days",
+            "description": "Exclude items updated within X days",
+            "default": 30
+          },
+          "torrent_is_dying": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Torrent Is Dying",
+            "description": "Filter items by torrent health status"
+          }
+        },
+        "type": "object",
+        "title": "BulkUpdateItemsRequest",
+        "description": "Request payload for bulk update items endpoint."
+      },
+      "BulkUpdateItemsResponse": {
+        "properties": {
+          "updated_items": {
+            "items": {
+              "$ref": "#/components/schemas/UpdatedItem"
+            },
+            "type": "array",
+            "title": "Updated Items",
+            "description": "Items and task UUIDs dispatched for update"
+          },
+          "processed_count": {
+            "type": "integer",
+            "title": "Processed Count",
+            "description": "Number of items scheduled for update"
+          },
+          "filtered_count": {
+            "type": "integer",
+            "title": "Filtered Count",
+            "description": "Number of items updated within the window"
+          },
+          "remaining_count": {
+            "type": "integer",
+            "title": "Remaining Count",
+            "description": "Number of items still eligible for update"
+          }
+        },
+        "type": "object",
+        "required": [
+          "updated_items",
+          "processed_count",
+          "filtered_count",
+          "remaining_count"
+        ],
+        "title": "BulkUpdateItemsResponse",
+        "description": "Response payload for bulk update items endpoint."
+      },
+      "CatalogItem": {
+        "properties": {
+          "item_type": {
+            "$ref": "#/components/schemas/ItemType"
+          },
+          "imdb_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imdb Id"
+          },
+          "tmdb_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tmdb Id"
+          },
+          "last_updated": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Last Updated"
+          },
+          "providers": {
+            "items": {
+              "$ref": "#/components/schemas/ProviderItem"
+            },
+            "type": "array",
+            "title": "Providers"
+          }
+        },
+        "type": "object",
+        "required": [
+          "item_type",
+          "imdb_id",
+          "tmdb_id",
+          "last_updated",
+          "providers"
+        ],
+        "title": "CatalogItem"
+      },
+      "CatalogItemsSortEnum": {
+        "type": "string",
+        "enum": [
+          "last_updated",
+          "-last_updated"
+        ],
+        "title": "CatalogItemsSortEnum"
+      },
+      "Episode": {
+        "properties": {
+          "season": {
+            "type": "integer",
+            "title": "Season"
+          },
+          "episode": {
+            "type": "integer",
+            "title": "Episode"
+          }
+        },
+        "type": "object",
+        "required": [
+          "season",
+          "episode"
+        ],
+        "title": "Episode"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ItemSchema": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "provider_slug": {
+            "type": "string",
+            "title": "Provider Slug"
+          },
+          "provider_url": {
+            "type": "string",
+            "title": "Provider Url"
+          },
+          "imdb_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imdb Id"
+          },
+          "imdb_score_value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imdb Score Value"
+          },
+          "tmdb_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tmdb Id"
+          },
+          "tmdb_score_value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tmdb Score Value"
+          },
+          "item_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ItemType"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "magnet_uri": {
+            "type": "string",
+            "title": "Magnet Uri"
+          },
+          "magnet_xt": {
+            "type": "string",
+            "title": "Magnet Xt"
+          },
+          "magnet_dn": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Magnet Dn"
+          },
+          "torrent_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Torrent Name"
+          },
+          "torrent_num_peers": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Torrent Num Peers"
+          },
+          "torrent_num_seeds": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Torrent Num Seeds"
+          },
+          "torrent_files": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Torrent Files"
+          },
+          "torrent_size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Torrent Size"
+          },
+          "torrent_failure_history": {
+            "items": {
+              "$ref": "#/components/schemas/TorrentFailure"
+            },
+            "type": "array",
+            "title": "Torrent Failure History"
+          },
+          "torrent_failure_days": {
+            "type": "integer",
+            "title": "Torrent Failure Days"
+          },
+          "torrent_is_dying": {
+            "type": "boolean",
+            "title": "Torrent Is Dying"
+          },
+          "torrent_is_dead": {
+            "type": "boolean",
+            "title": "Torrent Is Dead"
+          },
+          "download_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Download Path"
+          },
+          "languages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Languages"
+          },
+          "episodes": {
+            "items": {
+              "$ref": "#/components/schemas/Episode"
+            },
+            "type": "array",
+            "title": "Episodes"
+          },
+          "seasons": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Seasons"
+          },
+          "inserted_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inserted At"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          },
+          "download_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Download Url",
+            "readOnly": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "provider_slug",
+          "provider_url",
+          "imdb_id",
+          "imdb_score_value",
+          "tmdb_id",
+          "tmdb_score_value",
+          "item_type",
+          "magnet_uri",
+          "magnet_xt",
+          "magnet_dn",
+          "torrent_name",
+          "torrent_num_peers",
+          "torrent_num_seeds",
+          "torrent_files",
+          "torrent_size",
+          "torrent_failure_history",
+          "torrent_failure_days",
+          "torrent_is_dying",
+          "torrent_is_dead",
+          "download_path",
+          "languages",
+          "episodes",
+          "seasons",
+          "inserted_at",
+          "updated_at",
+          "download_url"
+        ],
+        "title": "ItemSchema"
+      },
+      "ItemType": {
+        "type": "string",
+        "enum": [
+          "movie",
+          "tv"
+        ],
+        "title": "ItemType"
+      },
+      "ItemsSortEnum": {
+        "type": "string",
+        "enum": [
+          "inserted_at",
+          "-inserted_at",
+          "updated_at",
+          "-updated_at"
+        ],
+        "title": "ItemsSortEnum"
+      },
+      "Job": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "scrapd-schedule",
+              "celery-task"
+            ],
+            "title": "Type"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "name",
+          "id"
+        ],
+        "title": "Job"
+      },
+      "JobMonitor": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "expired_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expired At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "expired_at"
+        ],
+        "title": "JobMonitor"
+      },
+      "JobMonitorResponse": {
+        "properties": {
+          "job_monitor": {
+            "$ref": "#/components/schemas/JobMonitor"
+          },
+          "jobs": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Job"
+            },
+            "type": "object",
+            "title": "Jobs"
+          },
+          "results": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Results"
+          },
+          "status": {
+            "additionalProperties": {
+              "type": "string",
+              "enum": [
+                "unknown",
+                "waiting",
+                "running",
+                "success",
+                "fail"
+              ]
+            },
+            "type": "object",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_monitor",
+          "jobs",
+          "results",
+          "status"
+        ],
+        "title": "JobMonitorResponse"
+      },
+      "Page_CatalogItem_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/CatalogItem"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "pages": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "page",
+          "size"
+        ],
+        "title": "Page[CatalogItem]"
+      },
+      "Page_ItemSchema_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ItemSchema"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "pages": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "page",
+          "size"
+        ],
+        "title": "Page[ItemSchema]"
+      },
+      "Page_ProviderURLIMDBMappingSchema_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ProviderURLIMDBMappingSchema"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "pages": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "page",
+          "size"
+        ],
+        "title": "Page[ProviderURLIMDBMappingSchema]"
+      },
+      "Page_RawItemSchema_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/RawItemSchema"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "pages": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "page",
+          "size"
+        ],
+        "title": "Page[RawItemSchema]"
+      },
+      "ProviderItem": {
+        "properties": {
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "torrents": {
+            "items": {
+              "$ref": "#/components/schemas/ProviderItemTorrent"
+            },
+            "type": "array",
+            "title": "Torrents"
+          }
+        },
+        "type": "object",
+        "required": [
+          "slug",
+          "url",
+          "torrents"
+        ],
+        "title": "ProviderItem"
+      },
+      "ProviderItemTorrent": {
+        "properties": {
+          "magnet_uri": {
+            "type": "string",
+            "title": "Magnet Uri"
+          },
+          "languages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Languages"
+          },
+          "torrent_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Torrent Name"
+          },
+          "torrent_size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Torrent Size"
+          },
+          "torrent_files": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Torrent Files"
+          },
+          "download_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Download Path"
+          },
+          "torrent_num_peers": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Torrent Num Peers"
+          },
+          "torrent_num_seeds": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Torrent Num Seeds"
+          },
+          "seasons": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Seasons"
+          },
+          "inserted_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inserted At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "magnet_uri",
+          "languages",
+          "torrent_name",
+          "torrent_size",
+          "torrent_files",
+          "download_path",
+          "torrent_num_peers",
+          "torrent_num_seeds",
+          "seasons",
+          "inserted_at"
+        ],
+        "title": "ProviderItemTorrent"
+      },
+      "ProviderURLIMDBMapping": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "inserted_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inserted At"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          },
+          "provider_url": {
+            "type": "string",
+            "title": "Provider Url"
+          },
+          "imdb_id": {
+            "type": "string",
+            "title": "Imdb Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "inserted_at",
+          "updated_at",
+          "provider_url",
+          "imdb_id"
+        ],
+        "title": "ProviderURLIMDBMapping"
+      },
+      "ProviderURLIMDBMappingSchema": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "inserted_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inserted At"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          },
+          "provider_url": {
+            "type": "string",
+            "title": "Provider Url"
+          },
+          "imdb_id": {
+            "type": "string",
+            "title": "Imdb Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "inserted_at",
+          "updated_at",
+          "provider_url",
+          "imdb_id"
+        ],
+        "title": "ProviderURLIMDBMappingSchema"
+      },
+      "ProviderURLIMDBMappingSortEnum": {
+        "type": "string",
+        "enum": [
+          "inserted_at",
+          "-inserted_at",
+          "updated_at",
+          "-updated_at"
+        ],
+        "title": "ProviderURLIMDBMappingSortEnum"
+      },
+      "RawItem": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "hash": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hash"
+          },
+          "inserted_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inserted At"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          },
+          "provider_slug": {
+            "type": "string",
+            "title": "Provider Slug"
+          },
+          "provider_url": {
+            "type": "string",
+            "title": "Provider Url"
+          },
+          "imdb_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imdb Id"
+          },
+          "tmdb_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tmdb Id"
+          },
+          "magnet_uris": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Magnet Uris"
+          },
+          "languages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Languages"
+          },
+          "qualitys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Qualitys"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "translated_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Translated Title"
+          },
+          "raw_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raw Title"
+          },
+          "year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Year"
+          },
+          "cast": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cast"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "hash",
+          "inserted_at",
+          "updated_at",
+          "provider_slug",
+          "provider_url",
+          "imdb_id",
+          "tmdb_id",
+          "magnet_uris",
+          "languages",
+          "qualitys",
+          "title",
+          "translated_title",
+          "raw_title",
+          "year",
+          "cast"
+        ],
+        "title": "RawItem"
+      },
+      "RawItemSchema": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "hash": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hash"
+          },
+          "inserted_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inserted At"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          },
+          "provider_slug": {
+            "type": "string",
+            "title": "Provider Slug"
+          },
+          "provider_url": {
+            "type": "string",
+            "title": "Provider Url"
+          },
+          "imdb_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imdb Id"
+          },
+          "tmdb_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tmdb Id"
+          },
+          "magnet_uris": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Magnet Uris"
+          },
+          "languages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Languages"
+          },
+          "qualitys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Qualitys"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "translated_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Translated Title"
+          },
+          "raw_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raw Title"
+          },
+          "year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Year"
+          },
+          "cast": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cast"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "hash",
+          "inserted_at",
+          "updated_at",
+          "provider_slug",
+          "provider_url",
+          "imdb_id",
+          "tmdb_id",
+          "magnet_uris",
+          "languages",
+          "qualitys",
+          "title",
+          "translated_title",
+          "raw_title",
+          "year",
+          "cast"
+        ],
+        "title": "RawItemSchema"
+      },
+      "RawItemsSortEnum": {
+        "type": "string",
+        "enum": [
+          "inserted_at",
+          "-inserted_at",
+          "updated_at",
+          "-updated_at"
+        ],
+        "title": "RawItemsSortEnum"
+      },
+      "ScrapePayload": {
+        "properties": {
+          "deep": {
+            "type": "integer",
+            "title": "Deep",
+            "default": 3
+          },
+          "q": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Q"
+          }
+        },
+        "type": "object",
+        "title": "ScrapePayload"
+      },
+      "ScrapeResponse": {
+        "properties": {
+          "scrape_return": {
+            "$ref": "#/components/schemas/ScrapeReturn"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scrape_return"
+        ],
+        "title": "ScrapeResponse"
+      },
+      "ScrapeReturn": {
+        "properties": {
+          "scrapyd_schedules_response": {
+            "items": {
+              "$ref": "#/components/schemas/ScrapydScheduleResponse"
+            },
+            "type": "array",
+            "title": "Scrapyd Schedules Response"
+          },
+          "job_monitor": {
+            "$ref": "#/components/schemas/JobMonitor"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scrapyd_schedules_response",
+          "job_monitor"
+        ],
+        "title": "ScrapeReturn"
+      },
+      "ScrapydScheduleResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok",
+            "title": "Status"
+          },
+          "jobid": {
+            "type": "string",
+            "title": "Jobid"
+          },
+          "node_name": {
+            "type": "string",
+            "title": "Node Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "jobid",
+          "node_name"
+        ],
+        "title": "ScrapydScheduleResponse"
+      },
+      "SearchPage_ItemSchema_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ItemSchema"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "pages": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pages"
+          },
+          "q": {
+            "type": "string",
+            "title": "Q"
+          },
+          "job_monitor": {
+            "$ref": "#/components/schemas/JobMonitor"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "page",
+          "size",
+          "q",
+          "job_monitor"
+        ],
+        "title": "SearchPage[ItemSchema]"
+      },
+      "TorrentFailure": {
+        "properties": {
+          "occurred_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Occurred At"
+          },
+          "failure_point": {
+            "type": "string",
+            "enum": [
+              "update_item_torrent_info",
+              "update_item_torrent_trackers_info"
+            ],
+            "title": "Failure Point"
+          }
+        },
+        "type": "object",
+        "required": [
+          "occurred_at",
+          "failure_point"
+        ],
+        "title": "TorrentFailure"
+      },
+      "UpdatedItem": {
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "title": "Task Id",
+            "description": "UUID of the dispatched Celery task"
+          },
+          "item_id": {
+            "type": "string",
+            "title": "Item Id",
+            "description": "ID of the item being updated"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task_id",
+          "item_id"
+        ],
+        "title": "UpdatedItem",
+        "description": "Task and item identifiers for a dispatched update."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
